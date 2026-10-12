@@ -53,7 +53,7 @@
 </head>
 <body class="relative min-h-screen overflow-x-hidden selection:bg-gothicpurple selection:text-white">
 
-    <!-- 🎵 背景音樂音訊標籤 (來自你的 Google 雲端硬碟直連) -->
+    <!-- 🎵 背景音樂標籤（讀取同目錄下的 Sealed in Glass.mp3） -->
     <audio id="bgMusic" src="Sealed in Glass.mp3" loop preload="auto"></audio>
 
     <!-- 動態背景迷霧 Canvas -->
@@ -104,7 +104,7 @@
             </div>
 
             <div class="pt-4 flex flex-wrap gap-4 justify-center">
-                <!-- 🎵 音樂播放按鈕 (點擊控制雲端硬碟背景音樂) -->
+                <!-- 🎵 背景音樂控制按鈕 -->
                 <button id="musicToggleBtn" onclick="toggleBackgroundMusic()" class="px-8 py-3 bg-gothicpurple/80 hover:bg-gothicpurple text-white font-cinzel tracking-widest rounded transition border border-moonlight/30 shadow-lg flex items-center gap-2 cursor-pointer">
                     <span id="musicStatusIcon">♰</span> <span id="musicBtnText">播放輓歌聖樂</span>
                 </button>
@@ -164,8 +164,8 @@
                 </div>
 
                 <div>
-                    <label class="block text-xs text-fogblue mb-1">圖片網址 (可貼上圖片連結)</label>
-                    <input type="url" id="inputImageUrl" placeholder="例如：https://cdn.phototourl.com/..." class="w-full bg-charcoal border border-gothicpurple/40 rounded px-3 py-2 text-white focus:outline-none focus:border-moonlight">
+                    <label class="block text-xs text-fogblue mb-1">圖片網址 (可貼上圖片連結或相對路徑 images/xxx.jpg)</label>
+                    <input type="text" id="inputImageUrl" placeholder="例如：images/artwork1.jpg 或 https://..." class="w-full bg-charcoal border border-gothicpurple/40 rounded px-3 py-2 text-white focus:outline-none focus:border-moonlight">
                 </div>
 
                 <div>
@@ -278,25 +278,26 @@
 
     <!-- JavaScript 邏輯區塊 -->
     <script>
-        /* 🎵 音樂播放/暫停控制邏輯 */
-       function toggleBackgroundMusic() {
-    const audio = document.getElementById('bgMusic');
-    const btnText = document.getElementById('musicBtnText');
-    const icon = document.getElementById('musicStatusIcon');
+        /* 🎵 播放/暫停背景音樂控制 */
+        function toggleBackgroundMusic() {
+            const audio = document.getElementById('bgMusic');
+            const btnText = document.getElementById('musicBtnText');
+            const icon = document.getElementById('musicStatusIcon');
 
-    if (audio.paused) {
-        audio.play().then(() => {
-            btnText.innerText = '暫停輓歌聖樂';
-            icon.innerText = '❚❚';
-        }).catch(err => {
-            console.log("播放失敗：", err);
-        });
-    } else {
-        audio.pause();
-        btnText.innerText = '播放輓歌聖樂';
-        icon.innerText = '♰';
-    }
-}
+            if (audio.paused) {
+                audio.play().then(() => {
+                    btnText.innerText = '暫停輓歌聖樂';
+                    icon.innerText = '❚❚';
+                }).catch(err => {
+                    console.log("自動播放受限或音樂載入中：", err);
+                });
+            } else {
+                audio.pause();
+                btnText.innerText = '播放輓歌聖樂';
+                icon.innerText = '♰';
+            }
+        }
+
         /* 預設作品資料 */
         const defaultWorks = [
             {
