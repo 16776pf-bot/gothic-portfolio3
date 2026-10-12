@@ -54,7 +54,7 @@
 <body class="relative min-h-screen overflow-x-hidden selection:bg-gothicpurple selection:text-white">
 
     <!-- 🎵 背景音樂音訊標籤 (來自你的 Google 雲端硬碟直連) -->
-    <audio id="bgMusic" src="https://lh3.googleusercontent.com/d/15Z7EL_ISzEn1E-Rn3SssJtDf56oVmIee" loop preload="auto"></audio>
+    <audio id="bgMusic" src="Sealed in Glass.mp3" loop preload="auto"></audio>
 
     <!-- 動態背景迷霧 Canvas -->
     <canvas id="fogCanvas" class="fixed top-0 left-0 w-full h-full pointer-events-none z-0 opacity-40"></canvas>
@@ -279,25 +279,24 @@
     <!-- JavaScript 邏輯區塊 -->
     <script>
         /* 🎵 音樂播放/暫停控制邏輯 */
-        function toggleBackgroundMusic() {
-            const audio = document.getElementById('bgMusic');
-            const btnText = document.getElementById('musicBtnText');
-            const icon = document.getElementById('musicStatusIcon');
+       function toggleBackgroundMusic() {
+    const audio = document.getElementById('bgMusic');
+    const btnText = document.getElementById('musicBtnText');
+    const icon = document.getElementById('musicStatusIcon');
 
-            if (audio.paused) {
-                audio.play().then(() => {
-                    btnText.innerText = '暫停輓歌聖樂';
-                    icon.innerText = '❚❚';
-                }).catch(err => {
-                    alert("請確定 Google 雲端硬碟檔案之共用權限已開啟為「知道連結的人皆可檢視」！");
-                });
-            } else {
-                audio.pause();
-                btnText.innerText = '播放輓歌聖樂';
-                icon.innerText = '♰';
-            }
-        }
-
+    if (audio.paused) {
+        audio.play().then(() => {
+            btnText.innerText = '暫停輓歌聖樂';
+            icon.innerText = '❚❚';
+        }).catch(err => {
+            console.log("播放失敗：", err);
+        });
+    } else {
+        audio.pause();
+        btnText.innerText = '播放輓歌聖樂';
+        icon.innerText = '♰';
+    }
+}
         /* 預設作品資料 */
         const defaultWorks = [
             {
