@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="zh-Hant" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>傑斯特佛放 | 維多利亞怨靈作品集</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Cinzel & Noto Serif TC -->
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700;900&family=Noto+Serif+TC:wght@400;600;900&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        charcoal: '#2B2D2F',
+                        fogblue: '#4A5560',
+                        gothicpurple: '#4B0082',
+                        darkbg: '#121314',
+                        darkcard: '#1A1C1E',
+                        moonlight: '#B0C4DE',
+                        bloodred: '#7A0016'
+                    },
+                    fontFamily: {
+                        gothic: ['Cinzel', 'Noto Serif TC', 'serif']
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #121314;
+            color: #D1D5DB;
+            font-family: 'Noto Serif TC', serif;
+        }
+        .font-cinzel { font-family: 'Cinzel', serif; }
+        .gothic-glow {
+            box-shadow: 0 0 15px rgba(75, 0, 130, 0.3);
+            border: 1px solid rgba(75, 0, 130, 0.4);
+        }
+        .gothic-glow:hover {
+            box-shadow: 0 0 25px rgba(75, 0, 130, 0.7), 0 0 10px rgba(176, 196, 222, 0.3);
+            border-color: rgba(176, 196, 222, 0.6);
+        }
+        @keyframes subtleFlicker {
+            0%, 100% { opacity: 0.9; text-shadow: 0 0 8px rgba(75, 0, 130, 0.8); }
+            50% { opacity: 0.6; text-shadow: 0 0 2px rgba(75, 0, 130, 0.3); }
+        }
+        .flicker-text { animation: subtleFlicker 4s infinite ease-in-out; }
+    </style>
+</head>
+<body class="relative min-h-screen overflow-x-hidden selection:bg-gothicpurple selection:text-white">
+
+    <!-- 🎵 背景音樂音訊標籤 (來自你的 Google 雲端硬碟直連) -->
+    <audio id="bgMusic" src="https://lh3.googleusercontent.com/d/15Z7EL_ISzEn1E-Rn3SssJtDf56oVmIee" loop preload="auto"></audio>
+
+    <!-- 動態背景迷霧 Canvas -->
+    <canvas id="fogCanvas" class="fixed top-0 left-0 w-full h-full pointer-events-none z-0 opacity-40"></canvas>
+
+    <!-- 頂部導覽列 -->
+    <nav class="sticky top-0 z-40 bg-darkbg/90 backdrop-blur-md border-b border-gothicpurple/30 text-gray-300">
+        <div class="max-w-6xl mx-auto px-4 py-3 flex justify-between items-center">
+            <a href="#hero" onclick="playGothicNote(146.83)" class="text-xl font-cinzel font-bold text-moonlight tracking-widest hover:text-white transition flex items-center gap-2">
+                <span class="text-gothicpurple text-2xl">♰</span> 傑斯特佛放
+            </a>
+            <div class="hidden md:flex space-x-8 text-sm tracking-widest font-cinzel">
+                <a href="#hero" onclick="playGothicNote(174.61)" class="hover:text-moonlight transition hover:border-b border-gothicpurple pb-1">首頁</a>
+                <a href="#portfolio" onclick="playGothicNote(220)" class="hover:text-moonlight transition hover:border-b border-gothicpurple pb-1">怨靈圖鑑</a>
+                <a href="#admin" onclick="playGothicNote(240)" class="hover:text-moonlight transition hover:border-b border-gothicpurple pb-1 text-gothicpurple font-bold">＋ 新增作品</a>
+                <a href="#game" onclick="playGothicNote(261.63)" class="hover:text-moonlight transition hover:border-b border-gothicpurple pb-1">死物解封</a>
+                <a href="#about" onclick="playGothicNote(293.66)" class="hover:text-moonlight transition hover:border-b border-gothicpurple pb-1">悲劇真相</a>
+            </div>
+            <button id="mobileMenuBtn" class="md:hidden text-moonlight text-2xl focus:outline-none">☰</button>
+        </div>
+        <div id="mobileMenu" class="hidden md:hidden bg-darkcard border-b border-gothicpurple/40 px-4 py-3 space-y-3 font-cinzel text-center">
+            <a href="#hero" class="block hover:text-moonlight">首頁</a>
+            <a href="#portfolio" class="block hover:text-moonlight">怨靈圖鑑</a>
+            <a href="#admin" class="block text-gothicpurple font-bold">＋ 新增作品</a>
+            <a href="#game" class="block hover:text-moonlight">死物解封</a>
+            <a href="#about" class="block hover:text-moonlight">悲劇真相</a>
+        </div>
+    </nav>
+
+    <!-- 主視覺看板 -->
+    <section id="hero" class="relative z-10 min-h-[85vh] flex items-center justify-center px-4 py-16 border-b border-gothicpurple/20">
+        <div class="max-w-4xl mx-auto text-center space-y-8 bg-darkcard/60 p-8 md:p-12 rounded-lg border border-gothicpurple/30 backdrop-blur-sm gothic-glow">
+            <div class="inline-block border-y border-gothicpurple/60 px-6 py-1">
+                <span class="text-xs font-cinzel tracking-[0.3em] text-fogblue uppercase">19th Century Victorian Specter</span>
+            </div>
+            
+            <h1 class="text-4xl md:text-6xl font-black font-cinzel text-moonlight tracking-widest flicker-text">
+                傑斯特佛放
+            </h1>
+
+            <div class="p-6 bg-charcoal/40 border-l-2 border-gothicpurple rounded text-left space-y-4">
+                <p class="text-lg text-moonlight font-semibold italic border-b border-fogblue/30 pb-3">
+                    「那些深埋在絲絨與蕾絲底下的，不是昔日的優雅，而是永不平息的怨咒。」
+                </p>
+                <p class="text-sm md:text-base leading-relaxed text-gray-300 tracking-wide font-light">
+                    誕生於 19 世紀最陰暗的悲劇，她是穿梭於炭灰霧夜中的維多利亞怨靈。冰冷的月光藍勾勒出她殘破的裙襬，幽暗的靛紫與毒藥般的神祕感在黑暗中交織。她用枯骨般的手指敲打著塵封的鋼琴，向每一個踏入古宅的活人，詠唱一曲關於背叛與死亡的永恆輓歌。
+                </p>
+            </div>
+
+            <div class="pt-4 flex flex-wrap gap-4 justify-center">
+                <!-- 🎵 音樂播放按鈕 (點擊控制雲端硬碟背景音樂) -->
+                <button id="musicToggleBtn" onclick="toggleBackgroundMusic()" class="px-8 py-3 bg-gothicpurple/80 hover:bg-gothicpurple text-white font-cinzel tracking-widest rounded transition border border-moonlight/30 shadow-lg flex items-center gap-2 cursor-pointer">
+                    <span id="musicStatusIcon">♰</span> <span id="musicBtnText">播放輓歌聖樂</span>
+                </button>
+                <a href="#portfolio" onclick="playGothicNote(130.81)" class="px-8 py-3 bg-charcoal border border-fogblue/60 hover:border-moonlight text-moonlight font-cinzel tracking-widest rounded transition">
+                    探尋作品
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- 內容區塊 1：作品集 -->
+    <section id="portfolio" class="relative z-10 max-w-6xl mx-auto px-4 py-20">
+        <div class="text-center space-y-3 mb-16">
+            <h2 class="text-3xl md:text-4xl font-cinzel font-bold text-moonlight tracking-widest">怨靈圖鑑與詛咒作品</h2>
+            <p class="text-sm text-fogblue tracking-wider">點擊檔案卡片，開啟塵封的悲劇記憶</p>
+            <div class="w-16 h-0.5 bg-gothicpurple mx-auto"></div>
+        </div>
+
+        <div id="portfolioGrid" class="grid grid-cols-1 md:grid-cols-3 gap-8"></div>
+    </section>
+
+    <!-- 內容區塊 2：管理面板 -->
+    <section id="admin" class="relative z-10 max-w-4xl mx-auto px-4 py-12">
+        <div class="bg-darkcard p-6 md:p-8 rounded-lg border border-gothicpurple/60 gothic-glow space-y-6">
+            <div class="flex justify-between items-center border-b border-gothicpurple/40 pb-4">
+                <h3 class="text-2xl font-cinzel font-bold text-moonlight flex items-center gap-2">
+                    <span>♰</span> 網頁作品管理員面板
+                </h3>
+                <span class="text-xs text-fogblue">即填即生成 ‧ 免強制欄位</span>
+            </div>
+
+            <form id="addWorkForm" onsubmit="handleAddNewWork(event)" class="space-y-4 text-sm">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs text-fogblue mb-1">作品標題 *</label>
+                        <input type="text" id="inputTitle" placeholder="例如：happyhappyhappy" class="w-full bg-charcoal border border-gothicpurple/40 rounded px-3 py-2 text-white focus:outline-none focus:border-moonlight">
+                    </div>
+                    <div>
+                        <label class="block text-xs text-fogblue mb-1">作品類別</label>
+                        <input type="text" id="inputCategory" placeholder="例如：ai / 視覺繪畫" class="w-full bg-charcoal border border-gothicpurple/40 rounded px-3 py-2 text-white focus:outline-none focus:border-moonlight">
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div>
+                        <label class="block text-xs text-fogblue mb-1">日期</label>
+                        <input type="text" id="inputDate" placeholder="例如：2026.10.09" class="w-full bg-charcoal border border-gothicpurple/40 rounded px-3 py-2 text-white focus:outline-none focus:border-moonlight">
+                    </div>
+                    <div>
+                        <label class="block text-xs text-fogblue mb-1">圖示 Emoji</label>
+                        <input type="text" id="inputIcon" placeholder="例如：😳 🥀 🎹" class="w-full bg-charcoal border border-gothicpurple/40 rounded px-3 py-2 text-white focus:outline-none focus:border-moonlight">
+                    </div>
+                    <div>
+                        <label class="block text-xs text-fogblue mb-1">卡片右上角標籤</label>
+                        <input type="text" id="inputTag" placeholder="例如：Art / AI" class="w-full bg-charcoal border border-gothicpurple/40 rounded px-3 py-2 text-white focus:outline-none focus:border-moonlight">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-xs text-fogblue mb-1">圖片網址 (可貼上圖片連結)</label>
+                    <input type="url" id="inputImageUrl" placeholder="例如：https://cdn.phototourl.com/..." class="w-full bg-charcoal border border-gothicpurple/40 rounded px-3 py-2 text-white focus:outline-none focus:border-moonlight">
+                </div>
+
+                <div>
+                    <label class="block text-xs text-fogblue mb-1">卡片簡短摘要 (可選)</label>
+                    <input type="text" id="inputShortDesc" placeholder="簡短摘要..." class="w-full bg-charcoal border border-gothicpurple/40 rounded px-3 py-2 text-white focus:outline-none focus:border-moonlight">
+                </div>
+
+                <div>
+                    <label class="block text-xs text-fogblue mb-1">彈窗詳細說明故事 (可選)</label>
+                    <textarea id="inputFullDesc" rows="2" placeholder="詳細說明故事..." class="w-full bg-charcoal border border-gothicpurple/40 rounded px-3 py-2 text-white focus:outline-none focus:border-moonlight"></textarea>
+                </div>
+
+                <div class="pt-4 flex flex-wrap gap-4 items-center justify-between border-t border-gothicpurple/30">
+                    <button type="submit" class="px-8 py-3 bg-gothicpurple hover:bg-gothicpurple/80 text-white font-cinzel font-bold rounded transition shadow-lg flex items-center gap-2 cursor-pointer">
+                        ＋ 立即新增作品卡片
+                    </button>
+                    
+                    <button type="button" onclick="exportDataForGitHub()" class="px-4 py-2 bg-charcoal border border-moonlight/40 hover:border-moonlight text-moonlight text-xs rounded transition">
+                        📋 複製 GitHub 更新碼 (貼回 index.html)
+                    </button>
+                </div>
+            </form>
+        </div>
+    </section>
+
+    <!-- 內容區塊 3：小遊戲 -->
+    <section id="game" class="relative z-10 bg-charcoal/30 py-20 border-y border-gothicpurple/30">
+        <div class="max-w-4xl mx-auto px-4">
+            <div class="text-center space-y-3 mb-10">
+                <h2 class="text-3xl font-cinzel font-bold text-moonlight tracking-widest">古宅遺物：詛咒對對碰</h2>
+                <p class="text-sm text-fogblue">解開被封印的 19 世紀死物配對，翻開每一張帶著怨念的牌卡</p>
+            </div>
+
+            <div class="bg-darkcard p-6 rounded-lg border border-gothicpurple/40 gothic-glow max-w-2xl mx-auto">
+                <div class="flex justify-between items-center mb-6 border-b border-fogblue/30 pb-4 text-sm font-cinzel">
+                    <div>翻牌步數: <span id="flipCount" class="text-moonlight font-bold">0</span></div>
+                    <div>成功解封: <span id="matchCount" class="text-moonlight font-bold">0 / 6</span></div>
+                    <button onclick="resetGame()" class="px-4 py-1.5 bg-gothicpurple/70 hover:bg-gothicpurple text-xs text-white rounded transition">重新洗牌</button>
+                </div>
+
+                <div id="cardGrid" class="grid grid-cols-3 md:grid-cols-4 gap-3"></div>
+
+                <div id="winMessage" class="hidden mt-6 p-4 bg-gothicpurple/30 border border-gothicpurple rounded text-center space-y-2">
+                    <p class="text-lg font-bold text-moonlight font-cinzel">♰ 詛咒暫時平息 ♰</p>
+                    <p class="text-xs text-gray-300">你成功解開了古宅中的所有封印遺物。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 內容區塊 4：關於我 -->
+    <section id="about" class="relative z-10 max-w-4xl mx-auto px-4 py-20">
+        <div class="bg-darkcard/80 p-8 md:p-12 rounded-lg border border-gothicpurple/40 gothic-glow space-y-6">
+            <h2 class="text-3xl font-cinzel font-bold text-moonlight border-b border-gothicpurple/40 pb-4">
+                關於創作者 ‧ 傑斯特佛放
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 items-center">
+                <div class="flex flex-col items-center text-center space-y-2">
+                    <div class="w-32 h-32 rounded-full border-2 border-gothicpurple bg-charcoal flex items-center justify-center text-5xl shadow-inner">
+                        🕸️
+                    </div>
+                    <span class="text-xs font-cinzel text-fogblue">19th Century Specter</span>
+                </div>
+                <div class="md:col-span-2 space-y-4 text-sm leading-relaxed text-gray-300">
+                    <p>
+                        我是「傑斯特佛放」，一位以歌德恐怖視覺、維多利亞傳統氛圍與暗黑音效藝術為核心的數位創作個體。
+                    </p>
+                    <p>
+                        專長領域包含：低飽和暗黑調色、古典詛咒故事寫作、實驗性聲音設計以及氛圍互動網頁開發。透過沉浸式的文字與音律，帶領觀者踏入塵封已久的維多利亞霧夜。
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 頁尾 -->
+    <footer class="relative z-10 bg-darkbg border-t border-gothicpurple/40 py-12 text-center text-xs text-fogblue">
+        <div class="max-w-4xl mx-auto px-4 space-y-6">
+            <p class="font-cinzel tracking-widest">
+                © 19TH CENTURY VICTORIAN REQUIEM — 傑斯特佛放 ALL WRONGS RESERVED.
+            </p>
+        </div>
+    </footer>
+
+    <!-- 🌟 彈窗 (Modal) -->
+    <div id="modal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/85 backdrop-blur-md hidden p-4 overflow-y-auto">
+        <div class="bg-darkcard border border-gothicpurple rounded-lg max-w-2xl w-full p-6 space-y-4 gothic-glow relative my-8">
+            <button onclick="closeModal()" class="absolute top-4 right-4 text-gray-400 hover:text-white text-xl z-10">✕</button>
+            <span id="modalCategory" class="text-xs bg-gothicpurple/60 text-moonlight px-2 py-0.5 rounded font-cinzel">Category</span>
+            <h3 id="modalTitle" class="text-2xl font-bold font-cinzel text-moonlight">Modal Title</h3>
+            <p id="modalDate" class="text-xs text-fogblue font-mono">Date</p>
+            
+            <div id="modalImageContainer" class="hidden rounded overflow-hidden border border-gothicpurple/40 bg-black/80 p-2 text-center relative group">
+                <a id="modalImageLink" href="#" target="_blank" title="點擊在新分頁開啟高畫質原圖" class="block">
+                    <img id="modalImage" src="" alt="" class="max-h-[65vh] max-w-full mx-auto object-contain rounded transition duration-300 group-hover:opacity-90">
+                </a>
+                <span class="text-[10px] text-fogblue block mt-1">🔍 點擊圖片可在新分頁打開高畫質原圖</span>
+            </div>
+
+            <div class="p-4 bg-charcoal/60 border-l-2 border-gothicpurple rounded">
+                <p id="modalDesc" class="text-sm text-gray-300 leading-relaxed">Description text here...</p>
+            </div>
+            <div class="pt-2 flex justify-end">
+                <button onclick="playGothicNote(220); closeModal();" class="px-5 py-2 bg-gothicpurple hover:bg-gothicpurple/80 text-white text-xs font-cinzel rounded transition">
+                    關閉檔案
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript 邏輯區塊 -->
+    <script>
+        /* 🎵 音樂播放/暫停控制邏輯 */
+        function toggleBackgroundMusic() {
+            const audio = document.getElementById('bgMusic');
+            const btnText = document.getElementById('musicBtnText');
+            const icon = document.getElementById('musicStatusIcon');
+
+            if (audio.paused) {
+                audio.play().then(() => {
+                    btnText.innerText = '暫停輓歌聖樂';
+                    icon.innerText = '❚❚';
+                }).catch(err => {
+                    alert("請確定 Google 雲端硬碟檔案之共用權限已開啟為「知道連結的人皆可檢視」！");
+                });
+            } else {
+                audio.pause();
+                btnText.innerText = '播放輓歌聖樂';
+                icon.innerText = '♰';
+            }
+        }
+
+        /* 預設作品資料 */
+        const defaultWorks = [
+            {
+                title: "塵封的鋼琴輓歌",
+                category: "影像與樂曲",
+                date: "1888.10.31",
+                shortDesc: "用枯骨般的手指敲打著塵封的鋼琴，向每一個踏入古宅的活人詠唱...",
+                fullDesc: "這是一段在深夜無人彈奏卻自動響起的維多利亞微調鋼琴錄音。琴鍵上殘留著血跡與枯萎的黑玫瑰，每當低音弦震動，便能聽見暗處輕柔的怨氣吟唱。",
+                icon: "🎹",
+                imageUrl: "",
+                tag: "Music & Visual"
+            },
+            {
+                title: "月光下的殘破蕾絲",
+                category: "視覺插畫系列",
+                date: "1892.04.14",
+                shortDesc: "冰冷的月光藍勾勒出殘破的裙襬，幽暗的靛紫與毒藥般的神祕感...",
+                fullDesc: "利用極低飽和度的霧藍灰與炭灰色彩，精心繪製的維多利亞時期怨靈禮服設計草圖。禮服上的蕾絲花紋隱藏著古老血契的禁忌符號。",
+                icon: "🥀",
+                imageUrl: "",
+                tag: "Illustration"
+            }
+        ];
+
+        let myWorks = JSON.parse(localStorage.getItem('jester_gothic_works')) || defaultWorks;
+
+        /* 自動渲染作品卡片 */
+        function renderPortfolio() {
+            const grid = document.getElementById('portfolioGrid');
+            if (!grid) return;
+            grid.innerHTML = '';
+
+            myWorks.forEach((work, index) => {
+                const card = document.createElement('div');
+                card.className = 'bg-darkcard rounded-lg overflow-hidden gothic-glow transition duration-300 group cursor-pointer relative';
+                card.onclick = () => openModal(work.title, work.category, work.date, work.fullDesc, work.tag, work.imageUrl);
+
+                const mediaHeader = work.imageUrl 
+                    ? `<img src="${work.imageUrl}" alt="${work.title}" class="w-full h-full object-cover group-hover:scale-105 transition duration-500">`
+                    : `<div class="text-6xl group-hover:scale-110 transition duration-500">${work.icon || '🥀'}</div>`;
+
+                card.innerHTML = `
+                    <div class="h-48 bg-charcoal flex items-center justify-center relative overflow-hidden border-b border-gothicpurple/30">
+                        ${mediaHeader}
+                        <span class="absolute top-3 right-3 bg-gothicpurple/80 backdrop-blur-sm text-xs px-2 py-1 rounded text-moonlight font-cinzel">${work.tag || 'Work'}</span>
+                        <button onclick="deleteWork(event, ${index})" class="absolute top-3 left-3 bg-red-900/80 hover:bg-red-700 text-white text-xs px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition">刪除</button>
+                    </div>
+                    <div class="p-6 space-y-3">
+                        <h3 class="text-xl font-bold font-cinzel text-moonlight group-hover:text-white transition">${work.title}</h3>
+                        <p class="text-xs text-fogblue font-mono">日期: ${work.date}</p>
+                        <p class="text-sm text-gray-400 line-clamp-2">${work.shortDesc}</p>
+                        <div class="pt-2 text-xs text-gothicpurple font-semibold flex items-center gap-1 group-hover:translate-x-1 transition">
+                            開啟檔案 ➔
+                        </div>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        /* 網頁直接新增作品 */
+        function handleAddNewWork(event) {
+            event.preventDefault();
+            playGothicNote(300, 'triangle', 0.5);
+
+            const titleVal = document.getElementById('inputTitle').value.trim() || '未命名作品';
+            const categoryVal = document.getElementById('inputCategory').value.trim() || 'AI創作';
+            const dateVal = document.getElementById('inputDate').value.trim() || '2026.10.09';
+            const iconVal = document.getElementById('inputIcon').value.trim() || '😳';
+            const tagVal = document.getElementById('inputTag').value.trim() || 'Art';
+            const imageUrlVal = document.getElementById('inputImageUrl').value.trim();
+            const shortDescVal = document.getElementById('inputShortDesc').value.trim() || `「${titleVal}」 - 歌德創作展演。`;
+            const fullDescVal = document.getElementById('inputFullDesc').value.trim() || `這是關於《${titleVal}》的詳細紀錄，融合了維多利亞時期暗黑風格與當代視覺符號。`;
+
+            const newWork = {
+                title: titleVal,
+                category: categoryVal,
+                date: dateVal,
+                icon: iconVal,
+                tag: tagVal,
+                imageUrl: imageUrlVal,
+                shortDesc: shortDescVal,
+                fullDesc: fullDescVal
+            };
+
+            myWorks.unshift(newWork);
+            localStorage.setItem('jester_gothic_works', JSON.stringify(myWorks));
+            renderPortfolio();
+
+            document.getElementById('addWorkForm').reset();
+            alert('♰ 作品已成功生成並呈現在上方「怨靈圖鑑」區塊！');
+
+            document.getElementById('portfolio').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        /* 刪除作品 */
+        function deleteWork(event, index) {
+            event.stopPropagation();
+            if (confirm('確定要刪除這項作品嗎？')) {
+                myWorks.splice(index, 1);
+                localStorage.setItem('jester_gothic_works', JSON.stringify(myWorks));
+                renderPortfolio();
+            }
+        }
+
+        /* 複製資料碼貼回 GitHub */
+        function exportDataForGitHub() {
+            const dataString = JSON.stringify(myWorks, null, 12);
+            const exportText = `const defaultWorks = ${dataString};`;
+            
+            navigator.clipboard.writeText(exportText).then(() => {
+                alert('📋 全站作品資料碼已複製到剪貼簿！\n\n請打開 GitHub 的 index.html，找到 script 開頭的 defaultWorks，貼上覆蓋它，網站公開更新就完成了！');
+            }).catch(() => {
+                prompt('請複製以下程式碼並貼回 GitHub 的 index.html 中：', exportText);
+            });
+        }
+
+        /* 聲音合成器 */
+        const AudioContext = window.AudioContext || window.webkitAudioContext;
+        let audioCtx;
+
+        function playGothicNote(freq = 220, type = 'sine', duration = 1.2) {
+            try {
+                if (!audioCtx) audioCtx = new AudioContext();
+                if (audioCtx.state === 'suspended') audioCtx.resume();
+                const osc = audioCtx.createOscillator();
+                const gain = audioCtx.createGain();
+                osc.type = type;
+                osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+                gain.gain.setValueAtTime(0.2, audioCtx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.0001, audioCtx.currentTime + duration);
+                osc.connect(gain);
+                gain.connect(audioCtx.destination);
+                osc.start();
+                osc.stop(audioCtx.currentTime + duration);
+            } catch (e) {}
+        }
+
+        /* 背景迷霧 Canvas */
+        const canvas = document.getElementById('fogCanvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        for (let i = 0; i < 25; i++) {
+            particles.push({
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height,
+                radius: Math.random() * 80 + 40,
+                vx: (Math.random() - 0.5) * 0.3,
+                vy: (Math.random() - 0.5) * 0.3,
+                alpha: Math.random() * 0.15 + 0.05
+            });
+        }
+
+        function animateFog() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach(p => {
+                p.x += p.vx; p.y += p.vy;
+                if (p.x < -100) p.x = canvas.width + 100;
+                if (p.x > canvas.width + 100) p.x = -100;
+                if (p.y < -100) p.y = canvas.height + 100;
+                if (p.y > canvas.height + 100) p.y = -100;
+
+                const grad = ctx.createRadialGradient(p.x, p.y, 0, p.x, p.y, p.radius);
+                grad.addColorStop(0, `rgba(75, 0, 130, ${p.alpha})`);
+                grad.addColorStop(1, 'rgba(18, 19, 20, 0)');
+                ctx.fillStyle = grad;
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+                ctx.fill();
+            });
+            requestAnimationFrame(animateFog);
+        }
+        animateFog();
+
+        /* Modal 控制 */
+        function openModal(title, category, date, desc, type, imageUrl) {
+            playGothicNote(174.61, 'sawtooth');
+            document.getElementById('modalTitle').innerText = title;
+            document.getElementById('modalCategory').innerText = category;
+            document.getElementById('modalDate').innerText = '紀錄日期: ' + date;
+            document.getElementById('modalDesc').innerText = desc;
+
+            const imgContainer = document.getElementById('modalImageContainer');
+            const imgEl = document.getElementById('modalImage');
+            const imgLink = document.getElementById('modalImageLink');
+
+            if (imageUrl) {
+                imgEl.src = imageUrl;
+                imgLink.href = imageUrl;
+                imgContainer.classList.remove('hidden');
+            } else {
+                imgContainer.classList.add('hidden');
+            }
+
+            document.getElementById('modal').classList.remove('hidden');
+        }
+
+        function closeModal() {
+            document.getElementById('modal').classList.add('hidden');
+        }
+
+        /* 手機版選單 */
+        document.getElementById('mobileMenuBtn').addEventListener('click', () => {
+            document.getElementById('mobileMenu').classList.toggle('hidden');
+        });
+
+        /* 小遊戲系統 */
+        const gameItems = [
+            { icon: '🎹', name: '塵封鋼琴' },
+            { icon: '💍', name: '怨咒血戒' },
+            { icon: '🕯️', name: '幽冥燭臺' },
+            { icon: '🪞', name: '破裂古鏡' },
+            { icon: '🥀', name: '枯萎黑玫瑰' },
+            { icon: '📜', name: '維多利亞血契' }
+        ];
+        let cardsData = [], flippedCards = [], matchedPairs = 0, flips = 0, lockBoard = false;
+
+        function resetGame() {
+            playGothicNote(130.81, 'square');
+            cardsData = [...gameItems, ...gameItems]
+                .sort(() => Math.random() - 0.5)
+                .map((item, id) => ({ ...item, id, flipped: false, matched: false }));
+            flippedCards = []; matchedPairs = 0; flips = 0; lockBoard = false;
+            document.getElementById('flipCount').innerText = flips;
+            document.getElementById('matchCount').innerText = '0 / 6';
+            document.getElementById('winMessage').classList.add('hidden');
+            renderCards();
+        }
+
+        function renderCards() {
+            const grid = document.getElementById('cardGrid');
+            grid.innerHTML = '';
+            cardsData.forEach((card, index) => {
+                const cardEl = document.createElement('div');
+                cardEl.className = 'h-24 bg-charcoal rounded border border-gothicpurple/50 flex items-center justify-center text-2xl cursor-pointer select-none transition-all duration-300 hover:border-moonlight gothic-glow';
+                if (card.flipped || card.matched) {
+                    cardEl.innerText = card.icon;
+                    cardEl.classList.add('bg-gothicpurple/40', 'border-moonlight');
+                } else {
+                    cardEl.innerText = '♰';
+                    cardEl.classList.add('text-gothicpurple');
+                }
+                cardEl.onclick = () => handleCardClick(index);
+                grid.appendChild(cardEl);
+            });
+        }
+
+        function handleCardClick(index) {
+            if (lockBoard) return;
+            const card = cardsData[index];
+            if (card.flipped || card.matched) return;
+            playGothicNote(220 + index * 15, 'sine', 0.4);
+            card.flipped = true;
+            flippedCards.push({ ...card, index });
+            flips++;
+            document.getElementById('flipCount').innerText = flips;
+            renderCards();
+            if (flippedCards.length === 2) checkMatch();
+        }
+
+        function checkMatch() {
+            lockBoard = true;
+            const [c1, c2] = flippedCards;
+            if (c1.name === c2.name) {
+                setTimeout(() => {
+                    playGothicNote(440, 'triangle', 0.8);
+                    cardsData[c1.index].matched = true;
+                    cardsData[c2.index].matched = true;
+                    matchedPairs++;
+                    document.getElementById('matchCount').innerText = `${matchedPairs} / 6`;
+                    flippedCards = []; lockBoard = false;
+                    renderCards();
+                    if (matchedPairs === 6) {
+                        setTimeout(() => {
+                            document.getElementById('winMessage').classList.remove('hidden');
+                        }, 400);
+                    }
+                }, 300);
+            } else {
+                setTimeout(() => {
+                    playGothicNote(110, 'sawtooth', 0.5);
+                    cardsData[c1.index].flipped = false;
+                    cardsData[c2.index].flipped = false;
+                    flippedCards = []; lockBoard = false;
+                    renderCards();
+                }, 800);
+            }
+        }
+
+        /* 網頁初始化 */
+        renderPortfolio();
+        resetGame();
+    </script>
+</body>
+</html>
