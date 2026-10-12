@@ -54,7 +54,8 @@
 <body class="relative min-h-screen overflow-x-hidden selection:bg-gothicpurple selection:text-white">
 
     <!-- 🎵 背景音樂標籤（讀取同目錄下的 Sealed in Glass.mp3） -->
-  <audio id="bgMusic" src="Sealed%20in%20Glass.mp3" loop preload="auto"></audio>
+    <audio id="bgMusic" src="Sealed%20in%20Glass.mp3" loop preload="auto"></audio>
+
     <!-- 動態背景迷霧 Canvas -->
     <canvas id="fogCanvas" class="fixed top-0 left-0 w-full h-full pointer-events-none z-0 opacity-40"></canvas>
 
@@ -104,7 +105,7 @@
 
             <div class="pt-4 flex flex-wrap gap-4 justify-center">
                 <!-- 🎵 背景音樂控制按鈕 -->
-               <button id="musicToggleBtn" onclick="toggleBackgroundMusic()" ...>
+                <button id="musicToggleBtn" onclick="toggleBackgroundMusic()" class="px-8 py-3 bg-gothicpurple/80 hover:bg-gothicpurple text-white font-cinzel tracking-widest rounded transition border border-moonlight/30 shadow-lg flex items-center gap-2 cursor-pointer">
                     <span id="musicStatusIcon">♰</span> <span id="musicBtnText">播放輓歌聖樂</span>
                 </button>
                 <a href="#portfolio" onclick="playGothicNote(130.81)" class="px-8 py-3 bg-charcoal border border-fogblue/60 hover:border-moonlight text-moonlight font-cinzel tracking-widest rounded transition">
@@ -163,8 +164,8 @@
                 </div>
 
                 <div>
-                    <label class="block text-xs text-fogblue mb-1">圖片網址 (可貼上圖片連結或相對路徑 images/xxx.jpg)</label>
-                    <input type="text" id="inputImageUrl" placeholder="例如：images/artwork1.jpg 或 https://..." class="w-full bg-charcoal border border-gothicpurple/40 rounded px-3 py-2 text-white focus:outline-none focus:border-moonlight">
+                    <label class="block text-xs text-fogblue mb-1">圖片網址 (可貼上圖片連結或相對路徑)</label>
+                    <input type="text" id="inputImageUrl" placeholder="例如：https://..." class="w-full bg-charcoal border border-gothicpurple/40 rounded px-3 py-2 text-white focus:outline-none focus:border-moonlight">
                 </div>
 
                 <div>
@@ -277,7 +278,7 @@
 
     <!-- JavaScript 邏輯區塊 -->
     <script>
-        /* 🎵 播放/暫停背景音樂控制 */
+        /* 🎵 播放/暫停背景音樂控制（已移除警示視窗） */
         function toggleBackgroundMusic() {
             const audio = document.getElementById('bgMusic');
             const btnText = document.getElementById('musicBtnText');
@@ -288,7 +289,7 @@
                     btnText.innerText = '暫停輓歌聖樂';
                     icon.innerText = '❚❚';
                 }).catch(err => {
-                    console.log("自動播放受限或音樂載入中：", err);
+                    console.log("音樂播放受限制或載入中：", err);
                 });
             } else {
                 audio.pause();
@@ -414,7 +415,7 @@
             });
         }
 
-        /* 聲音合成器 */
+        /* 聲音合成器 (僅供選單與小遊戲提示音使用) */
         const AudioContext = window.AudioContext || window.webkitAudioContext;
         let audioCtx;
 
