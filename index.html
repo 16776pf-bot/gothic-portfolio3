@@ -162,7 +162,6 @@
             </div>
 
             <div class="pt-4 flex flex-wrap gap-4 justify-center">
-                <!-- 🎵 背景音樂控制按鈕 -->
                 <button id="musicToggleBtn" onclick="toggleBackgroundMusic()" class="px-8 py-3 bg-gothicpurple/80 hover:bg-gothicpurple text-white font-cinzel tracking-widest rounded transition border border-moonlight/30 shadow-lg flex items-center gap-2 cursor-pointer">
                     <span id="musicStatusIcon">♰</span> <span id="musicBtnText">播放輓歌聖樂</span>
                 </button>
@@ -222,7 +221,7 @@
                 </div>
 
                 <div>
-                    <label class="block text-xs text-fogblue mb-1">圖片網址 (可貼上圖片連結或相對路徑)</label>
+                    <label class="block text-xs text-fogblue mb-1">圖片網址</label>
                     <input type="text" id="inputImageUrl" placeholder="例如：https://..." class="w-full bg-charcoal border border-gothicpurple/40 rounded px-3 py-2 text-white focus:outline-none focus:border-moonlight">
                 </div>
 
@@ -240,7 +239,6 @@
                     <button type="submit" class="px-8 py-3 bg-gothicpurple hover:bg-gothicpurple/80 text-white font-cinzel font-bold rounded transition shadow-lg flex items-center gap-2 cursor-pointer">
                         ＋ 立即新增作品卡片
                     </button>
-                    
                     <button type="button" onclick="exportDataForGitHub()" class="px-4 py-2 bg-charcoal border border-moonlight/40 hover:border-moonlight text-moonlight text-xs rounded transition">
                         📋 複製 GitHub 更新碼 (貼回 index.html)
                     </button>
@@ -288,21 +286,15 @@
                     <span class="text-xs font-cinzel text-fogblue">19th Century Specter</span>
                 </div>
                 <div class="md:col-span-2 space-y-4 text-sm leading-relaxed text-gray-300">
-                    <p>
-                        我是「傑斯特佛放」，一位以歌德恐怖視覺、維多利亞傳統氛圍與暗黑音效藝術為核心的數位創作個體。
-                    </p>
-                    <p>
-                        專長領域包含：低飽和暗黑調色、古典詛咒故事寫作、實驗性聲音設計以及氛圍互動網頁開發。透過沉浸式的文字與音律，帶領觀者踏入塵封已久的維多利亞霧夜。
-                    </p>
+                    <p>我是「傑斯特佛放」，一位以歌德恐怖視覺、維多利亞傳統氛圍與暗黑音效藝術為核心的數位創作個體。</p>
+                    <p>專長領域包含：低飽和暗黑調色、古典詛咒故事寫作、實驗性聲音設計以及氛圍互動網頁開發。透過沉浸式的文字與音律，帶領觀者踏入塵封已久的維多利亞霧夜。</p>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- 🐾 貓抓板/貓爬架 -->
-    <div id="catTree" class="hidden fixed bottom-12 right-24 z-30 text-5xl transition pointer-events-none drop-shadow-2xl">
-        🏰
-    </div>
+    <div id="catTree" class="hidden fixed bottom-12 right-24 z-30 text-5xl transition pointer-events-none drop-shadow-2xl">🏰</div>
 
     <!-- 🐾 食物/毛線球放置點 -->
     <div id="droppedFood" class="hidden fixed z-40 text-3xl animate-bounce pointer-events-none drop-shadow-lg">
@@ -312,21 +304,11 @@
     <!-- 🐾 哥德黑貓小寵物 UI 控制面板 -->
     <div id="petUi" class="fixed bottom-4 right-4 z-50 flex flex-col items-center select-none">
         <div class="flex flex-wrap gap-2 mb-2 bg-darkcard/90 p-1.5 rounded-full border border-gothicpurple/50 backdrop-blur shadow-2xl">
-            <button onclick="toggleFoodMenu(event)" class="px-2.5 py-1 bg-gothicpurple/60 hover:bg-gothicpurple text-xs text-white rounded-full transition flex items-center gap-1 cursor-pointer">
-                🍽️ 餵食
-            </button>
-            <button onclick="placeYarnBall(event)" class="px-2.5 py-1 bg-gothicpurple/60 hover:bg-gothicpurple text-xs text-white rounded-full transition flex items-center gap-1 cursor-pointer">
-                🧶 毛線球
-            </button>
-            <button onclick="toggleCatTree(event)" class="px-2.5 py-1 bg-gothicpurple/60 hover:bg-gothicpurple text-xs text-white rounded-full transition flex items-center gap-1 cursor-pointer">
-                🏰 貓爬架
-            </button>
-            <button onclick="openClosetModal(event)" class="px-2.5 py-1 bg-charcoal border border-moonlight/30 hover:border-moonlight text-xs text-moonlight rounded-full transition flex items-center gap-1 cursor-pointer">
-                👗 貓咪換裝衣帽間
-            </button>
-            <button onclick="triggerJumpscare(event)" class="px-2.5 py-1 bg-bloodred hover:bg-red-700 text-xs text-white rounded-full transition flex items-center gap-1 cursor-pointer font-bold">
-                👻 突襲
-            </button>
+            <button onclick="toggleFoodMenu(event)" class="px-2.5 py-1 bg-gothicpurple/60 hover:bg-gothicpurple text-xs text-white rounded-full transition flex items-center gap-1 cursor-pointer">🍽️ 餵食</button>
+            <button onclick="placeYarnBall(event)" class="px-2.5 py-1 bg-gothicpurple/60 hover:bg-gothicpurple text-xs text-white rounded-full transition flex items-center gap-1 cursor-pointer">🧶 毛線球</button>
+            <button onclick="toggleCatTree(event)" class="px-2.5 py-1 bg-gothicpurple/60 hover:bg-gothicpurple text-xs text-white rounded-full transition flex items-center gap-1 cursor-pointer">🏰 貓爬架</button>
+            <button onclick="openClosetModal(event)" class="px-2.5 py-1 bg-charcoal border border-moonlight/30 hover:border-moonlight text-xs text-moonlight rounded-full transition flex items-center gap-1 cursor-pointer">👗 貓咪換裝衣帽間</button>
+            <button onclick="triggerJumpscare(event)" class="px-2.5 py-1 bg-bloodred hover:bg-red-700 text-xs text-white rounded-full transition flex items-center gap-1 cursor-pointer font-bold">👻 突襲</button>
         </div>
 
         <!-- 🍱 食物選單 -->
@@ -348,7 +330,7 @@
         </div>
 
         <div id="catSvgContainer" class="w-full h-full relative">
-            <!-- 貓貓 SVG 模板將由 JavaScript 動態載入，實現整隻貓更換的獨立造型 -->
+            <!-- 動態載入完整貓貓 SVG -->
         </div>
     </div>
 
@@ -358,13 +340,12 @@
             <button onclick="closeClosetModal()" class="absolute top-4 right-4 text-gray-400 hover:text-white text-xl z-10">✕</button>
             <div class="border-b border-gothicpurple/40 pb-3">
                 <h3 class="text-2xl font-bold font-cinzel text-moonlight flex items-center gap-2">
-                    <span>👗</span> 貓咪換裝衣帽間 (獨立模板切換)
+                    <span>👗</span> 貓咪換裝衣帽間 (保留貓耳特徵)
                 </h3>
-                <p class="text-xs text-fogblue">每套衣服都是一隻全新獨立造型的貓貓模板！</p>
+                <p class="text-xs text-fogblue">每套造型均為獨立模板，且黑貓的耳朵皆完美露在服裝與帽子上方！</p>
             </div>
 
             <div class="space-y-5 max-h-[60vh] overflow-y-auto pr-2">
-                <!-- 1. 經典預設 -->
                 <div>
                     <h4 class="text-xs font-bold text-gothicpurple mb-2">🐈 經典日常</h4>
                     <div class="grid grid-cols-2 gap-2 text-xs">
@@ -372,9 +353,8 @@
                     </div>
                 </div>
 
-                <!-- 2. 可愛俏皮系列 -->
                 <div>
-                    <h4 class="text-xs font-bold text-gothicpurple mb-2">🐰 可愛俏皮系列 (Cute)</h4>
+                    <h4 class="text-xs font-bold text-gothicpurple mb-2">🐰 可愛俏皮系列</h4>
                     <div class="grid grid-cols-4 gap-2 text-xs">
                         <button onclick="switchCatOutfit('bunny')" class="p-2 bg-charcoal border border-gothicpurple/40 hover:border-moonlight rounded text-center">🐰 兔耳帽</button>
                         <button onclick="switchCatOutfit('duck')" class="p-2 bg-charcoal border border-gothicpurple/40 hover:border-moonlight rounded text-center">🐥 小黃鴨雨衣</button>
@@ -383,27 +363,24 @@
                     </div>
                 </div>
 
-                <!-- 3. 季節限定系列 -->
                 <div>
-                    <h4 class="text-xs font-bold text-gothicpurple mb-2">🌸 季節限定系列 (Seasonal)</h4>
+                    <h4 class="text-xs font-bold text-gothicpurple mb-2">🌸 季節限定系列</h4>
                     <div class="grid grid-cols-3 gap-2 text-xs">
                         <button onclick="switchCatOutfit('santa')" class="p-2 bg-charcoal border border-gothicpurple/40 hover:border-moonlight rounded text-center">🎅 聖誕裝</button>
                         <button onclick="switchCatOutfit('pumpkin')" class="p-2 bg-charcoal border border-gothicpurple/40 hover:border-moonlight rounded text-center">🎃 萬聖南瓜</button>
                     </div>
                 </div>
 
-                <!-- 4. 職業角色系列 -->
                 <div>
-                    <h4 class="text-xs font-bold text-gothicpurple mb-2">🩺 職業角色系列 (Careers)</h4>
+                    <h4 class="text-xs font-bold text-gothicpurple mb-2">🩺 職業角色系列</h4>
                     <div class="grid grid-cols-3 gap-2 text-xs">
                         <button onclick="switchCatOutfit('doctor')" class="p-2 bg-charcoal border border-gothicpurple/40 hover:border-moonlight rounded text-center">🩺 白袍醫生</button>
                         <button onclick="switchCatOutfit('astronaut')" class="p-2 bg-charcoal border border-gothicpurple/40 hover:border-moonlight rounded text-center">👨‍🚀 太空宇航員</button>
                     </div>
                 </div>
 
-                <!-- 5. 主題特別造型 -->
                 <div>
-                    <h4 class="text-xs font-bold text-gothicpurple mb-2">🧙‍♀️ 主題特別造型 (Theme)</h4>
+                    <h4 class="text-xs font-bold text-gothicpurple mb-2">🧙‍♀️ 主題特別造型</h4>
                     <div class="grid grid-cols-4 gap-2 text-xs">
                         <button onclick="switchCatOutfit('wizard')" class="p-2 bg-charcoal border border-gothicpurple/40 hover:border-moonlight rounded text-center">🧙‍♀️ 魔法師</button>
                         <button onclick="switchCatOutfit('princess')" class="p-2 bg-charcoal border border-gothicpurple/40 hover:border-moonlight rounded text-center">👑 貓咪公主</button>
@@ -758,7 +735,7 @@
             }
         }
 
-        /* 🐾 獨立貓貓模板系統 (完整造型 SVG) */
+        /* 🐾 獨立貓貓模板系統 (貓耳置頂確保保留) */
         let petX = 100;
         let petY = window.innerHeight - 90;
         let petDirection = 1;
@@ -768,7 +745,6 @@
 
         let selectedFood = null;
         let droppedFoodPos = null;
-        let currentOutfit = 'classic';
 
         const petEl = document.getElementById('pet');
         const catSvgContainer = document.getElementById('catSvgContainer');
@@ -780,17 +756,23 @@
         const droppedFoodIconEl = document.getElementById('droppedFoodIcon');
         const catTreeEl = document.getElementById('catTree');
 
-        // 各種造型的獨立 SVG 模板定義
+        // 通用貓耳圖層 (繪製在帽子/服裝的最上方)
+        const commonEarsSvg = `
+            <g class="cat-ears-top-layer">
+                <polygon points="28,32 38,10 48,28" fill="#18181A" />
+                <polygon points="32,30 38,15 44,28" fill="#2B2B2E" />
+                <polygon points="52,28 62,10 72,32" fill="#18181A" />
+                <polygon points="56,28 62,15 68,30" fill="#2B2B2E" />
+            </g>`;
+
         const catTemplates = {
             classic: `
                 <svg viewBox="0 0 100 100" class="w-full h-full drop-shadow-md">
                     <path class="cat-tail" d="M 30,75 C 10,80 5,50 15,40 C 20,35 22,45 18,55 C 12,65 25,70 32,68 Z" fill="#18181A" />
                     <ellipse cx="50" cy="68" rx="22" ry="20" fill="#18181A" />
-                    <ellipse cx="40" cy="84" rx="6" ry="10" fill="#18181A" />
-                    <ellipse cx="60" cy="84" rx="6" ry="10" fill="#18181A" />
+                    <ellipse cx="40" cy="84" rx="6" ry="10" fill="#18181A" /><ellipse cx="60" cy="84" rx="6" ry="10" fill="#18181A" />
                     <ellipse cx="50" cy="45" rx="26" ry="22" fill="#18181A" />
-                    <polygon points="28,32 38,10 48,28" fill="#18181A" /><polygon points="32,30 38,15 44,28" fill="#2B2B2E" />
-                    <polygon points="52,28 62,10 72,32" fill="#18181A" /><polygon points="56,28 62,15 68,30" fill="#2B2B2E" />
+                    ${commonEarsSvg}
                     <g id="catEyesNormal"><ellipse cx="38" cy="42" rx="9" ry="11" fill="#FFCC00" /><ellipse cx="62" cy="42" rx="9" ry="11" fill="#FFCC00" /><ellipse cx="38" cy="42" rx="5" ry="8" fill="#000" /><ellipse cx="62" cy="42" rx="5" ry="8" fill="#000" /><circle cx="35" cy="38" r="2.5" fill="#FFF" /><circle cx="59" cy="38" r="2.5" fill="#FFF" /></g>
                     <g id="catEyesHappy" class="hidden"><path d="M 29,42 Q 38,32 47,42" stroke="#FFCC00" stroke-width="3.5" fill="none" stroke-linecap="round"/><path d="M 53,42 Q 62,32 71,42" stroke="#FFCC00" stroke-width="3.5" fill="none" stroke-linecap="round"/></g>
                     <g id="catEyesSurprised" class="hidden"><circle cx="38" cy="42" r="11" fill="#FFCC00" /><circle cx="62" cy="42" r="11" fill="#FFCC00" /><circle cx="38" cy="42" r="3" fill="#000" /><circle cx="62" cy="42" r="3" fill="#000" /></g>
@@ -800,13 +782,13 @@
                 </svg>`,
             bunny: `
                 <svg viewBox="0 0 100 100" class="w-full h-full drop-shadow-md">
-                    <!-- 兔耳帽造型貓貓 -->
                     <ellipse cx="35" cy="18" rx="7" ry="16" fill="#FCE7F3"/><ellipse cx="65" cy="18" rx="7" ry="16" fill="#FCE7F3"/>
                     <path class="cat-tail" d="M 30,75 C 10,80 5,50 15,40 C 20,35 22,45 18,55 C 12,65 25,70 32,68 Z" fill="#18181A" />
                     <ellipse cx="50" cy="68" rx="22" ry="20" fill="#18181A" />
                     <ellipse cx="40" cy="84" rx="6" ry="10" fill="#18181A" /><ellipse cx="60" cy="84" rx="6" ry="10" fill="#18181A" />
                     <ellipse cx="50" cy="45" rx="26" ry="22" fill="#18181A" />
                     <path d="M 24,42 Q 50,22 76,42 Q 80,60 50,60 Q 20,60 24,42 Z" fill="#FCE7F3" opacity="0.9"/>
+                    ${commonEarsSvg}
                     <g id="catEyesNormal"><ellipse cx="38" cy="42" rx="9" ry="11" fill="#FFCC00" /><ellipse cx="62" cy="42" rx="9" ry="11" fill="#FFCC00" /><ellipse cx="38" cy="42" rx="5" ry="8" fill="#000" /><ellipse cx="62" cy="42" rx="5" ry="8" fill="#000" /><circle cx="35" cy="38" r="2.5" fill="#FFF" /><circle cx="59" cy="38" r="2.5" fill="#FFF" /></g>
                     <g id="catEyesHappy" class="hidden"><path d="M 29,42 Q 38,32 47,42" stroke="#FFCC00" stroke-width="3.5" fill="none" stroke-linecap="round"/><path d="M 53,42 Q 62,32 71,42" stroke="#FFCC00" stroke-width="3.5" fill="none" stroke-linecap="round"/></g>
                     <g id="catEyesSurprised" class="hidden"><circle cx="38" cy="42" r="11" fill="#FFCC00" /><circle cx="62" cy="42" r="11" fill="#FFCC00" /><circle cx="38" cy="42" r="3" fill="#000" /><circle cx="62" cy="42" r="3" fill="#000" /></g>
@@ -816,13 +798,13 @@
                 </svg>`,
             duck: `
                 <svg viewBox="0 0 100 100" class="w-full h-full drop-shadow-md">
-                    <!-- 小黃鴨雨衣貓貓 -->
                     <path class="cat-tail" d="M 30,75 C 10,80 5,50 15,40 C 20,35 22,45 18,55 C 12,65 25,70 32,68 Z" fill="#18181A" />
                     <ellipse cx="50" cy="68" rx="23" ry="21" fill="#FACC15" />
                     <ellipse cx="40" cy="84" rx="6" ry="10" fill="#18181A" /><ellipse cx="60" cy="84" rx="6" ry="10" fill="#18181A" />
                     <ellipse cx="50" cy="45" rx="26" ry="22" fill="#18181A" />
-                    <path d="M 22,25 Q 50,8 78,25 Q 75,55 50,55 Q 25,55 22,25 Z" fill="#FACC15"/>
-                    <circle cx="50" cy="18" r="6" fill="#FEF08A"/>
+                    <path d="M 22,28 Q 50,15 78,28 Q 75,55 50,55 Q 25,55 22,28 Z" fill="#FACC15"/>
+                    <circle cx="50" cy="18" r="5" fill="#FEF08A"/>
+                    ${commonEarsSvg}
                     <g id="catEyesNormal"><ellipse cx="38" cy="42" rx="9" ry="11" fill="#FFCC00" /><ellipse cx="62" cy="42" rx="9" ry="11" fill="#FFCC00" /><ellipse cx="38" cy="42" rx="5" ry="8" fill="#000" /><ellipse cx="62" cy="42" rx="5" ry="8" fill="#000" /><circle cx="35" cy="38" r="2.5" fill="#FFF" /><circle cx="59" cy="38" r="2.5" fill="#FFF" /></g>
                     <g id="catEyesHappy" class="hidden"><path d="M 29,42 Q 38,32 47,42" stroke="#FFCC00" stroke-width="3.5" fill="none" stroke-linecap="round"/><path d="M 53,42 Q 62,32 71,42" stroke="#FFCC00" stroke-width="3.5" fill="none" stroke-linecap="round"/></g>
                     <g id="catEyesSurprised" class="hidden"><circle cx="38" cy="42" r="11" fill="#FFCC00" /><circle cx="62" cy="42" r="11" fill="#FFCC00" /><circle cx="38" cy="42" r="3" fill="#000" /><circle cx="62" cy="42" r="3" fill="#000" /></g>
@@ -832,13 +814,13 @@
                 </svg>`,
             dino: `
                 <svg viewBox="0 0 100 100" class="w-full h-full drop-shadow-md">
-                    <!-- 恐龍裝貓貓 -->
                     <polygon points="65,50 75,40 70,55 80,48 72,62" fill="#16A34A"/>
                     <path class="cat-tail" d="M 30,75 C 10,80 5,50 15,40 C 20,35 22,45 18,55 C 12,65 25,70 32,68 Z" fill="#18181A" />
                     <ellipse cx="50" cy="68" rx="22" ry="20" fill="#22C55E" />
                     <ellipse cx="40" cy="84" rx="6" ry="10" fill="#18181A" /><ellipse cx="60" cy="84" rx="6" ry="10" fill="#18181A" />
                     <ellipse cx="50" cy="45" rx="26" ry="22" fill="#18181A" />
-                    <path d="M 24,30 Q 50,15 76,30 Q 82,50 50,52 Q 18,50 24,30 Z" fill="#22C55E"/>
+                    <path d="M 24,32 Q 50,20 76,32 Q 82,50 50,52 Q 18,50 24,32 Z" fill="#22C55E"/>
+                    ${commonEarsSvg}
                     <g id="catEyesNormal"><ellipse cx="38" cy="42" rx="9" ry="11" fill="#FFCC00" /><ellipse cx="62" cy="42" rx="9" ry="11" fill="#FFCC00" /><ellipse cx="38" cy="42" rx="5" ry="8" fill="#000" /><ellipse cx="62" cy="42" rx="5" ry="8" fill="#000" /><circle cx="35" cy="38" r="2.5" fill="#FFF" /><circle cx="59" cy="38" r="2.5" fill="#FFF" /></g>
                     <g id="catEyesHappy" class="hidden"><path d="M 29,42 Q 38,32 47,42" stroke="#FFCC00" stroke-width="3.5" fill="none" stroke-linecap="round"/><path d="M 53,42 Q 62,32 71,42" stroke="#FFCC00" stroke-width="3.5" fill="none" stroke-linecap="round"/></g>
                     <g id="catEyesSurprised" class="hidden"><circle cx="38" cy="42" r="11" fill="#FFCC00" /><circle cx="62" cy="42" r="11" fill="#FFCC00" /><circle cx="38" cy="42" r="3" fill="#000" /><circle cx="62" cy="42" r="3" fill="#000" /></g>
@@ -848,12 +830,12 @@
                 </svg>`,
             wizard: `
                 <svg viewBox="0 0 100 100" class="w-full h-full drop-shadow-md">
-                    <!-- 魔法師造型貓貓 -->
                     <polygon points="50,2 30,32 70,32" fill="#4B0082"/><ellipse cx="50" cy="32" rx="22" ry="5" fill="#3B0764"/>
                     <path class="cat-tail" d="M 30,75 C 10,80 5,50 15,40 C 20,35 22,45 18,55 C 12,65 25,70 32,68 Z" fill="#18181A" />
                     <ellipse cx="50" cy="68" rx="22" ry="20" fill="#3B0764" />
                     <ellipse cx="40" cy="84" rx="6" ry="10" fill="#18181A" /><ellipse cx="60" cy="84" rx="6" ry="10" fill="#18181A" />
                     <ellipse cx="50" cy="45" rx="26" ry="22" fill="#18181A" />
+                    ${commonEarsSvg}
                     <g id="catEyesNormal"><ellipse cx="38" cy="42" rx="9" ry="11" fill="#FFCC00" /><ellipse cx="62" cy="42" rx="9" ry="11" fill="#FFCC00" /><ellipse cx="38" cy="42" rx="5" ry="8" fill="#000" /><ellipse cx="62" cy="42" rx="5" ry="8" fill="#000" /><circle cx="35" cy="38" r="2.5" fill="#FFF" /><circle cx="59" cy="38" r="2.5" fill="#FFF" /></g>
                     <g id="catEyesHappy" class="hidden"><path d="M 29,42 Q 38,32 47,42" stroke="#FFCC00" stroke-width="3.5" fill="none" stroke-linecap="round"/><path d="M 53,42 Q 62,32 71,42" stroke="#FFCC00" stroke-width="3.5" fill="none" stroke-linecap="round"/></g>
                     <g id="catEyesSurprised" class="hidden"><circle cx="38" cy="42" r="11" fill="#FFCC00" /><circle cx="62" cy="42" r="11" fill="#FFCC00" /><circle cx="38" cy="42" r="3" fill="#000" /><circle cx="62" cy="42" r="3" fill="#000" /></g>
@@ -863,13 +845,13 @@
                 </svg>`,
             santa: `
                 <svg viewBox="0 0 100 100" class="w-full h-full drop-shadow-md">
-                    <!-- 聖誕裝造型貓貓 -->
                     <path class="cat-tail" d="M 30,75 C 10,80 5,50 15,40 C 20,35 22,45 18,55 C 12,65 25,70 32,68 Z" fill="#18181A" />
                     <ellipse cx="50" cy="68" rx="22" ry="20" fill="#DC2626" />
                     <rect x="35" y="65" width="30" height="6" fill="#FFFFFF"/>
                     <ellipse cx="40" cy="84" rx="6" ry="10" fill="#18181A" /><ellipse cx="60" cy="84" rx="6" ry="10" fill="#18181A" />
                     <ellipse cx="50" cy="45" rx="26" ry="22" fill="#18181A" />
                     <polygon points="35,30 65,30 50,5" fill="#DC2626"/><circle cx="50" cy="5" r="4" fill="#FFFFFF"/><rect x="33" y="27" width="34" height="5" fill="#FFFFFF" rx="2"/>
+                    ${commonEarsSvg}
                     <g id="catEyesNormal"><ellipse cx="38" cy="42" rx="9" ry="11" fill="#FFCC00" /><ellipse cx="62" cy="42" rx="9" ry="11" fill="#FFCC00" /><ellipse cx="38" cy="42" rx="5" ry="8" fill="#000" /><ellipse cx="62" cy="42" rx="5" ry="8" fill="#000" /><circle cx="35" cy="38" r="2.5" fill="#FFF" /><circle cx="59" cy="38" r="2.5" fill="#FFF" /></g>
                     <g id="catEyesHappy" class="hidden"><path d="M 29,42 Q 38,32 47,42" stroke="#FFCC00" stroke-width="3.5" fill="none" stroke-linecap="round"/><path d="M 53,42 Q 62,32 71,42" stroke="#FFCC00" stroke-width="3.5" fill="none" stroke-linecap="round"/></g>
                     <g id="catEyesSurprised" class="hidden"><circle cx="38" cy="42" r="11" fill="#FFCC00" /><circle cx="62" cy="42" r="11" fill="#FFCC00" /><circle cx="38" cy="42" r="3" fill="#000" /><circle cx="62" cy="42" r="3" fill="#000" /></g>
@@ -879,12 +861,12 @@
                 </svg>`,
             pumpkin: `
                 <svg viewBox="0 0 100 100" class="w-full h-full drop-shadow-md">
-                    <!-- 萬聖南瓜造型貓貓 -->
                     <path class="cat-tail" d="M 30,75 C 10,80 5,50 15,40 C 20,35 22,45 18,55 C 12,65 25,70 32,68 Z" fill="#18181A" />
                     <ellipse cx="50" cy="68" rx="22" ry="20" fill="#EA580C" />
                     <ellipse cx="40" cy="84" rx="6" ry="10" fill="#18181A" /><ellipse cx="60" cy="84" rx="6" ry="10" fill="#18181A" />
                     <ellipse cx="50" cy="45" rx="26" ry="22" fill="#18181A" />
-                    <path d="M 28,25 Q 50,12 72,25 Q 78,50 50,52 Q 22,50 28,25 Z" fill="#F97316"/><rect x="47" y="6" width="6" height="8" fill="#15803D" rx="2"/>
+                    <path d="M 28,28 Q 50,15 72,28 Q 78,50 50,52 Q 22,50 28,28 Z" fill="#F97316"/><rect x="47" y="6" width="6" height="8" fill="#15803D" rx="2"/>
+                    ${commonEarsSvg}
                     <g id="catEyesNormal"><ellipse cx="38" cy="42" rx="9" ry="11" fill="#FFCC00" /><ellipse cx="62" cy="42" rx="9" ry="11" fill="#FFCC00" /><ellipse cx="38" cy="42" rx="5" ry="8" fill="#000" /><ellipse cx="62" cy="42" rx="5" ry="8" fill="#000" /><circle cx="35" cy="38" r="2.5" fill="#FFF" /><circle cx="59" cy="38" r="2.5" fill="#FFF" /></g>
                     <g id="catEyesHappy" class="hidden"><path d="M 29,42 Q 38,32 47,42" stroke="#FFCC00" stroke-width="3.5" fill="none" stroke-linecap="round"/><path d="M 53,42 Q 62,32 71,42" stroke="#FFCC00" stroke-width="3.5" fill="none" stroke-linecap="round"/></g>
                     <g id="catEyesSurprised" class="hidden"><circle cx="38" cy="42" r="11" fill="#FFCC00" /><circle cx="62" cy="42" r="11" fill="#FFCC00" /><circle cx="38" cy="42" r="3" fill="#000" /><circle cx="62" cy="42" r="3" fill="#000" /></g>
@@ -894,13 +876,13 @@
                 </svg>`,
             astronaut: `
                 <svg viewBox="0 0 100 100" class="w-full h-full drop-shadow-md">
-                    <!-- 太空宇航員造型貓貓 -->
                     <path class="cat-tail" d="M 30,75 C 10,80 5,50 15,40 C 20,35 22,45 18,55 C 12,65 25,70 32,68 Z" fill="#F8FAFC" />
                     <ellipse cx="50" cy="68" rx="22" ry="20" fill="#F8FAFC" />
                     <ellipse cx="40" cy="84" rx="6" ry="10" fill="#CBD5E1" /><ellipse cx="60" cy="84" rx="6" ry="10" fill="#CBD5E1" />
                     <circle cx="50" cy="45" r="24" fill="#F8FAFC"/>
                     <ellipse cx="50" cy="46" rx="18" ry="15" fill="#334155"/>
                     <ellipse cx="50" cy="45" rx="15" ry="12" fill="#1E293B"/>
+                    ${commonEarsSvg}
                     <g id="catEyesNormal"><ellipse cx="42" cy="43" rx="6" ry="8" fill="#FFCC00" /><ellipse cx="58" cy="43" rx="6" ry="8" fill="#FFCC00" /><ellipse cx="42" cy="43" rx="3" ry="5" fill="#000" /><ellipse cx="58" cy="43" rx="3" ry="5" fill="#000" /></g>
                     <g id="catEyesHappy" class="hidden"><path d="M 36,43 Q 42,35 48,43" stroke="#FFCC00" stroke-width="2.5" fill="none" stroke-linecap="round"/><path d="M 52,43 Q 58,35 64,43" stroke="#FFCC00" stroke-width="2.5" fill="none" stroke-linecap="round"/></g>
                     <g id="catEyesSurprised" class="hidden"><circle cx="42" cy="43" r="7" fill="#FFCC00" /><circle cx="58" cy="43" r="7" fill="#FFCC00" /><circle cx="42" cy="43" r="2" fill="#000" /><circle cx="58" cy="43" r="2" fill="#000" /></g>
@@ -909,12 +891,12 @@
                 </svg>`,
             princess: `
                 <svg viewBox="0 0 100 100" class="w-full h-full drop-shadow-md">
-                    <!-- 貓咪公主造型貓貓 -->
                     <path class="cat-tail" d="M 30,75 C 10,80 5,50 15,40 C 20,35 22,45 18,55 C 12,65 25,70 32,68 Z" fill="#18181A" />
                     <ellipse cx="50" cy="68" rx="22" ry="20" fill="#F472B6" />
                     <ellipse cx="40" cy="84" rx="6" ry="10" fill="#18181A" /><ellipse cx="60" cy="84" rx="6" ry="10" fill="#18181A" />
                     <ellipse cx="50" cy="45" rx="26" ry="22" fill="#18181A" />
                     <polygon points="38,26 50,14 62,26 50,22" fill="#FACC15"/>
+                    ${commonEarsSvg}
                     <g id="catEyesNormal"><ellipse cx="38" cy="42" rx="9" ry="11" fill="#FFCC00" /><ellipse cx="62" cy="42" rx="9" ry="11" fill="#FFCC00" /><ellipse cx="38" cy="42" rx="5" ry="8" fill="#000" /><ellipse cx="62" cy="42" rx="5" ry="8" fill="#000" /><circle cx="35" cy="38" r="2.5" fill="#FFF" /><circle cx="59" cy="38" r="2.5" fill="#FFF" /></g>
                     <g id="catEyesHappy" class="hidden"><path d="M 29,42 Q 38,32 47,42" stroke="#FFCC00" stroke-width="3.5" fill="none" stroke-linecap="round"/><path d="M 53,42 Q 62,32 71,42" stroke="#FFCC00" stroke-width="3.5" fill="none" stroke-linecap="round"/></g>
                     <g id="catEyesSurprised" class="hidden"><circle cx="38" cy="42" r="11" fill="#FFCC00" /><circle cx="62" cy="42" r="11" fill="#FFCC00" /><circle cx="38" cy="42" r="3" fill="#000" /><circle cx="62" cy="42" r="3" fill="#000" /></g>
@@ -924,12 +906,12 @@
                 </svg>`,
             pirate: `
                 <svg viewBox="0 0 100 100" class="w-full h-full drop-shadow-md">
-                    <!-- 海盜船長造型貓貓 -->
                     <path class="cat-tail" d="M 30,75 C 10,80 5,50 15,40 C 20,35 22,45 18,55 C 12,65 25,70 32,68 Z" fill="#18181A" />
                     <ellipse cx="50" cy="68" rx="22" ry="20" fill="#1E293B" />
                     <ellipse cx="40" cy="84" rx="6" ry="10" fill="#18181A" /><ellipse cx="60" cy="84" rx="6" ry="10" fill="#18181A" />
                     <ellipse cx="50" cy="45" rx="26" ry="22" fill="#18181A" />
                     <path d="M 25,28 Q 50,18 75,28 L 70,36 Q 50,28 30,36 Z" fill="#0F172A"/><circle cx="50" cy="22" r="3" fill="#FACC15"/>
+                    ${commonEarsSvg}
                     <g id="catEyesNormal"><ellipse cx="38" cy="42" rx="9" ry="11" fill="#FFCC00" /><ellipse cx="62" cy="42" rx="9" ry="11" fill="#FFCC00" /><ellipse cx="38" cy="42" rx="5" ry="8" fill="#000" /><ellipse cx="62" cy="42" rx="5" ry="8" fill="#000" /><circle cx="35" cy="38" r="2.5" fill="#FFF" /><circle cx="59" cy="38" r="2.5" fill="#FFF" /></g>
                     <g id="catEyesHappy" class="hidden"><path d="M 29,42 Q 38,32 47,42" stroke="#FFCC00" stroke-width="3.5" fill="none" stroke-linecap="round"/><path d="M 53,42 Q 62,32 71,42" stroke="#FFCC00" stroke-width="3.5" fill="none" stroke-linecap="round"/></g>
                     <g id="catEyesSurprised" class="hidden"><circle cx="38" cy="42" r="11" fill="#FFCC00" /><circle cx="62" cy="42" r="11" fill="#FFCC00" /><circle cx="38" cy="42" r="3" fill="#000" /><circle cx="62" cy="42" r="3" fill="#000" /></g>
@@ -939,8 +921,8 @@
                 </svg>`,
             ghost: `
                 <svg viewBox="0 0 100 100" class="w-full h-full drop-shadow-md">
-                    <!-- 恐怖幽靈裝造型貓貓 -->
                     <path d="M 25,40 Q 20,70 30,90 Q 40,85 50,90 Q 60,85 70,90 Q 80,70 75,40 Q 75,20 50,20 Q 25,20 25,40 Z" fill="#F8FAFC" opacity="0.95"/>
+                    ${commonEarsSvg}
                     <g id="catEyesNormal"><ellipse cx="38" cy="42" rx="9" ry="11" fill="#FFCC00" /><ellipse cx="62" cy="42" rx="9" ry="11" fill="#FFCC00" /><ellipse cx="38" cy="42" rx="5" ry="8" fill="#000" /><ellipse cx="62" cy="42" rx="5" ry="8" fill="#000" /><circle cx="35" cy="38" r="2.5" fill="#FFF" /><circle cx="59" cy="38" r="2.5" fill="#FFF" /></g>
                     <g id="catEyesHappy" class="hidden"><path d="M 29,42 Q 38,32 47,42" stroke="#FFCC00" stroke-width="3.5" fill="none" stroke-linecap="round"/><path d="M 53,42 Q 62,32 71,42" stroke="#FFCC00" stroke-width="3.5" fill="none" stroke-linecap="round"/></g>
                     <g id="catEyesSurprised" class="hidden"><circle cx="38" cy="42" r="11" fill="#FFCC00" /><circle cx="62" cy="42" r="11" fill="#FFCC00" /><circle cx="38" cy="42" r="3" fill="#000" /><circle cx="62" cy="42" r="3" fill="#000" /></g>
@@ -948,12 +930,12 @@
                 </svg>`,
             doctor: `
                 <svg viewBox="0 0 100 100" class="w-full h-full drop-shadow-md">
-                    <!-- 白袍醫生造型貓貓 -->
                     <path class="cat-tail" d="M 30,75 C 10,80 5,50 15,40 C 20,35 22,45 18,55 C 12,65 25,70 32,68 Z" fill="#18181A" />
                     <ellipse cx="50" cy="68" rx="22" ry="20" fill="#FFFFFF" />
                     <ellipse cx="40" cy="84" rx="6" ry="10" fill="#18181A" /><ellipse cx="60" cy="84" rx="6" ry="10" fill="#18181A" />
                     <ellipse cx="50" cy="45" rx="26" ry="22" fill="#18181A" />
                     <circle cx="62" cy="22" r="5" fill="#EF4444"/><text x="60" y="25" font-size="8" fill="#FFF">+</text>
+                    ${commonEarsSvg}
                     <g id="catEyesNormal"><ellipse cx="38" cy="42" rx="9" ry="11" fill="#FFCC00" /><ellipse cx="62" cy="42" rx="9" ry="11" fill="#FFCC00" /><ellipse cx="38" cy="42" rx="5" ry="8" fill="#000" /><ellipse cx="62" cy="42" rx="5" ry="8" fill="#000" /><circle cx="35" cy="38" r="2.5" fill="#FFF" /><circle cx="59" cy="38" r="2.5" fill="#FFF" /></g>
                     <g id="catEyesHappy" class="hidden"><path d="M 29,42 Q 38,32 47,42" stroke="#FFCC00" stroke-width="3.5" fill="none" stroke-linecap="round"/><path d="M 53,42 Q 62,32 71,42" stroke="#FFCC00" stroke-width="3.5" fill="none" stroke-linecap="round"/></g>
                     <g id="catEyesSurprised" class="hidden"><circle cx="38" cy="42" r="11" fill="#FFCC00" /><circle cx="62" cy="42" r="11" fill="#FFCC00" /><circle cx="38" cy="42" r="3" fill="#000" /><circle cx="62" cy="42" r="3" fill="#000" /></g>
@@ -963,12 +945,12 @@
                 </svg>`,
             bow: `
                 <svg viewBox="0 0 100 100" class="w-full h-full drop-shadow-md">
-                    <!-- 大蝴蝶結造型貓貓 -->
                     <path class="cat-tail" d="M 30,75 C 10,80 5,50 15,40 C 20,35 22,45 18,55 C 12,65 25,70 32,68 Z" fill="#18181A" />
                     <ellipse cx="50" cy="68" rx="22" ry="20" fill="#18181A" />
                     <ellipse cx="40" cy="84" rx="6" ry="10" fill="#18181A" /><ellipse cx="60" cy="84" rx="6" ry="10" fill="#18181A" />
                     <ellipse cx="50" cy="45" rx="26" ry="22" fill="#18181A" />
                     <polygon points="50,22 65,12 60,32" fill="#EC4899"/><polygon points="50,22 35,12 40,32" fill="#EC4899"/><circle cx="50" cy="22" r="4" fill="#BE185D"/>
+                    ${commonEarsSvg}
                     <g id="catEyesNormal"><ellipse cx="38" cy="42" rx="9" ry="11" fill="#FFCC00" /><ellipse cx="62" cy="42" rx="9" ry="11" fill="#FFCC00" /><ellipse cx="38" cy="42" rx="5" ry="8" fill="#000" /><ellipse cx="62" cy="42" rx="5" ry="8" fill="#000" /><circle cx="35" cy="38" r="2.5" fill="#FFF" /><circle cx="59" cy="38" r="2.5" fill="#FFF" /></g>
                     <g id="catEyesHappy" class="hidden"><path d="M 29,42 Q 38,32 47,42" stroke="#FFCC00" stroke-width="3.5" fill="none" stroke-linecap="round"/><path d="M 53,42 Q 62,32 71,42" stroke="#FFCC00" stroke-width="3.5" fill="none" stroke-linecap="round"/></g>
                     <g id="catEyesSurprised" class="hidden"><circle cx="38" cy="42" r="11" fill="#FFCC00" /><circle cx="62" cy="42" r="11" fill="#FFCC00" /><circle cx="38" cy="42" r="3" fill="#000" /><circle cx="62" cy="42" r="3" fill="#000" /></g>
@@ -979,7 +961,6 @@
         };
 
         function renderCatTemplate(outfitKey) {
-            currentOutfit = outfitKey;
             catSvgContainer.innerHTML = catTemplates[outfitKey] || catTemplates['classic'];
         }
 
@@ -1011,7 +992,7 @@
             petEl.classList.remove('pet-walking', 'pet-running', 'pet-jump', 'pet-stretch', 'pet-spin', 'pet-dragged');
         }
 
-        /* 🏰 貓爬架系統 */
+        /* 🏰 貓爬架 */
         function toggleCatTree(e) {
             e.stopPropagation();
             catTreeEl.classList.toggle('hidden');
@@ -1033,7 +1014,7 @@
             }
         }
 
-        /* 🧶 毛線球玩具 */
+        /* 🧶 毛線球 */
         function placeYarnBall(e) {
             e.stopPropagation();
             droppedFoodPos = { x: Math.random() * (window.innerWidth - 150) + 50, y: window.innerHeight - 100, icon: '🧶', type: 'toy' };
@@ -1046,7 +1027,7 @@
             catGoEatFood();
         }
 
-        /* 🍽️ 餵食系統 */
+        /* 🍽️ 餵食 */
         function toggleFoodMenu(e) {
             e.stopPropagation();
             foodMenuEl.classList.toggle('hidden');
@@ -1139,7 +1120,7 @@
             }, 1200);
         }
 
-        /* 👗 換裝衣帽間彈窗控制 (整隻貓模板替換) */
+        /* 👗 衣帽間彈窗控制 */
         function openClosetModal(e) {
             e.stopPropagation();
             document.getElementById('closetModal').classList.remove('hidden');
@@ -1152,11 +1133,7 @@
         function switchCatOutfit(outfitKey) {
             playGothicNote(440, 'sine', 0.4);
             renderCatTemplate(outfitKey);
-            speak(`✨ 換裝成功！全新獨立造型登場！`, 2500);
-        }
-
-        function unequipAll() {
-            switchCatOutfit('classic');
+            speak(`✨ 換裝成功！黑貓耳朵依然立在最上面喔！`, 2500);
         }
 
         /* 🙀 突襲驚喜 */
@@ -1172,7 +1149,7 @@
             speak("喵嘻嘻～ 有沒有被嚇一跳？ 🎃", 2500);
         }
 
-        /* 🐾 AI 漫遊循環 (僅 3% 機率點開作品卡片) */
+        /* 🐾 AI 漫遊循環 */
         function petAiLoop() {
             if (isDragging || petState === 'eating' || petState === 'dragged' || petState === 'interacting') return;
 
@@ -1180,7 +1157,7 @@
 
             if (rand < 0.01) {
                 triggerJumpscare();
-            } else if (rand < 0.04) { // 🔻 僅 3% 機率開啟作品卡片
+            } else if (rand < 0.04) {
                 tryClickWorkCard();
             } else if (rand < 0.15) {
                 tryPlayGameCard();
@@ -1273,7 +1250,7 @@
 
         setInterval(petAiLoop, Math.floor(Math.random() * 2500) + 3000);
 
-        /* 🖱️ 滑鼠拖動 (Drag & Drop) */
+        /* 🖱️ 滑鼠拖動 */
         petEl.addEventListener('mousedown', (e) => {
             isDragging = true;
             petState = 'dragged';
