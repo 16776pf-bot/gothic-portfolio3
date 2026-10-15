@@ -49,6 +49,23 @@
             50% { opacity: 0.6; text-shadow: 0 0 2px rgba(75, 0, 130, 0.3); }
         }
         .flicker-text { animation: subtleFlicker 4s infinite ease-in-out; }
+
+        /* 🐾 寵物走路與跳躍動畫 */
+        .pet-walking {
+            animation: petWaddle 0.6s infinite alternate ease-in-out;
+        }
+        .pet-jump {
+            animation: petJump 0.5s ease-out;
+        }
+        @keyframes petWaddle {
+            0% { transform: translateY(0) rotate(-3deg); }
+            100% { transform: translateY(-4px) rotate(3deg); }
+        }
+        @keyframes petJump {
+            0% { transform: translateY(0); }
+            50% { transform: translateY(-25px); }
+            100% { transform: translateY(0); }
+        }
     </style>
 </head>
 <body class="relative min-h-screen overflow-x-hidden selection:bg-gothicpurple selection:text-white">
@@ -241,6 +258,27 @@
         </div>
     </section>
 
+    <!-- 🐾 哥德黑貓小寵物介面與本體 -->
+    <div id="petUi" class="fixed bottom-4 right-4 z-50 flex flex-col items-center select-none">
+        <div id="petBubble" class="hidden mb-2 px-3 py-1 bg-darkcard/90 border border-gothicpurple text-moonlight text-xs rounded-lg shadow-lg font-cinzel animate-bounce">
+            <span id="petSpeech">喵～ (親密度 +1)</span>
+        </div>
+        <div class="flex gap-2 mb-2 bg-darkcard/80 p-1.5 rounded-full border border-gothicpurple/50 backdrop-blur">
+            <button onclick="feedPet()" class="px-2 py-1 bg-gothicpurple/60 hover:bg-gothicpurple text-xs text-white rounded-full transition flex items-center gap-1 cursor-pointer">
+                🐟 餵食
+            </button>
+            <button onclick="petInteract()" class="px-2 py-1 bg-charcoal hover:bg-fogblue text-xs text-moonlight rounded-full transition flex items-center gap-1 cursor-pointer">
+                ✨ 撫摸
+            </button>
+        </div>
+    </div>
+
+    <!-- 寵物實體 (可在畫面上自由散步) -->
+    <div id="pet" onclick="onPetClick()" class="cursor-pointer text-4xl transition-all duration-300 hover:scale-110 select-none" style="position: fixed; bottom: 15px; left: 100px; z-index: 9999;">
+        🐈‍⬛
+        <div id="petFood" class="hidden absolute -top-8 left-2 text-2xl">🐟</div>
+    </div>
+
     <!-- 頁尾 -->
     <footer class="relative z-10 bg-darkbg border-t border-gothicpurple/40 py-12 text-center text-xs text-fogblue">
         <div class="max-w-4xl mx-auto px-4 space-y-6">
@@ -278,7 +316,7 @@
 
     <!-- JavaScript 邏輯區塊 -->
     <script>
-        /* 🎵 播放/暫停背景音樂控制（已移除警示視窗） */
+        /* 🎵 播放/暫停背景音樂控制 */
         function toggleBackgroundMusic() {
             const audio = document.getElementById('bgMusic');
             const btnText = document.getElementById('musicBtnText');
@@ -415,7 +453,7 @@
             });
         }
 
-        /* 聲音合成器 (僅供選單與小遊戲提示音使用) */
+        /* 聲音合成器 */
         const AudioContext = window.AudioContext || window.webkitAudioContext;
         let audioCtx;
 
@@ -593,6 +631,93 @@
                     renderCards();
                 }, 800);
             }
+        }
+
+        /* 🐾 歌德黑貓小寵物 AI 控制系統 */
+        let petPos = 100;
+        let petDirection = 1;
+        let petState = 'idle';
+        let petHappiness = 50;
+
+        const petEl = document.getElementById('pet');
+        const foodEl = document.getElementById('petFood');
+        const bubbleEl = document.getElementById('petBubble');
+        const speechEl = document.getElementById('petSpeech');
+
+        function speak(text, duration = 2500) {
+            speechEl.innerText = text;
+            bubbleEl.classList.remove('hidden');
+            setTimeout(() => {
+                bubbleEl.classList.add('hidden');
+            }, duration);
+        }
+
+        function petAiLoop() {
+            if (petState === 'eating') return;
+
+            const rand = Math.random();
+            if (rand < 0.35) {
+                petState = 'walking';
+                petEl.classList.add('pet-walking');
+                petDirection = Math.random() > 0.5 ? 1 : -1;
+                petEl.style.transform = petDirection === 1 ? 'scaleX(1)' : 'scaleX(-1)';
+
+                const moveDistance = Math.floor(Math.random() * 150) + 50;
+                const targetPos = Math.max(20, Math.min(window.innerWidth - 80, petPos + moveDistance * petDirection));
+                
+                const moveInterval = setInterval(() => {
+                    if (Math.abs(petPos - targetPos) < 5 || petState !== 'walking') {
+                        clearInterval(moveInterval);
+                        petState = 'idle';
+                        petEl.classList.remove('pet-walking');
+                    } else {
+                        petPos += petDirection * 2;
+                        petEl.style.left = petPos + 'px';
+                    }
+                }, 30);
+            } else {
+                petState = 'idle';
+                petEl.classList.remove('pet-walking');
+            }
+        }
+
+        setInterval(petAiLoop, Math.floor(Math.random() * 3000) + 3000);
+
+        function petInteract() {
+            playGothicNote(350, 'sine', 0.3);
+            petEl.classList.add('pet-jump');
+            petHappiness = Math.min(100, petHappiness + 10);
+            
+            const responses = ["🐈‍⬛ 喵嗚～ (蹭蹭)", "🖤 咕嚕咕嚕...", "♰ 討摸成功！好感度 +10"];
+            const randomReply = responses[Math.floor(Math.random() * responses.length)];
+            speak(randomReply);
+
+            setTimeout(() => {
+                petEl.classList.remove('pet-jump');
+            }, 500);
+        }
+
+        function onPetClick() {
+            petInteract();
+        }
+
+        function feedPet() {
+            if (petState === 'eating') return;
+
+            playGothicNote(440, 'triangle', 0.4);
+            petState = 'eating';
+            foodEl.classList.remove('hidden');
+            speak("🐟 發現美味小魚！", 3000);
+
+            setTimeout(() => {
+                petEl.classList.add('pet-jump');
+                setTimeout(() => {
+                    foodEl.classList.add('hidden');
+                    petEl.classList.remove('pet-jump');
+                    speak("😋 嚼嚼... 太美味了！", 2500);
+                    petState = 'idle';
+                }, 500);
+            }, 800);
         }
 
         /* 網頁初始化 */
