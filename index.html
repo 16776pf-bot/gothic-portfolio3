@@ -127,6 +127,7 @@
                 <a href="#hero" onclick="playGothicNote(174.61)" class="hover:text-moonlight transition hover:border-b border-gothicpurple pb-1">首頁</a>
                 <a href="#portfolio" onclick="playGothicNote(220)" class="hover:text-moonlight transition hover:border-b border-gothicpurple pb-1">怨靈圖鑑</a>
                 <a href="#admin" onclick="playGothicNote(240)" class="hover:text-moonlight transition hover:border-b border-gothicpurple pb-1 text-gothicpurple font-bold">＋ 新增作品</a>
+                <a href="#stairsGame" onclick="playGothicNote(250)" class="hover:text-moonlight transition hover:border-b border-gothicpurple pb-1 text-amber-400 font-bold">🪜 貓貓下樓梯</a>
                 <a href="#game" onclick="playGothicNote(261.63)" class="hover:text-moonlight transition hover:border-b border-gothicpurple pb-1">死物解封</a>
                 <a href="#about" onclick="playGothicNote(293.66)" class="hover:text-moonlight transition hover:border-b border-gothicpurple pb-1">悲劇真相</a>
             </div>
@@ -136,6 +137,7 @@
             <a href="#hero" class="block hover:text-moonlight">首頁</a>
             <a href="#portfolio" class="block hover:text-moonlight">怨靈圖鑑</a>
             <a href="#admin" class="block text-gothicpurple font-bold">＋ 新增作品</a>
+            <a href="#stairsGame" class="block text-amber-400 font-bold">🪜 貓貓下樓梯</a>
             <a href="#game" class="block hover:text-moonlight">死物解封</a>
             <a href="#about" class="block hover:text-moonlight">悲劇真相</a>
         </div>
@@ -165,9 +167,60 @@
                 <button id="musicToggleBtn" onclick="toggleBackgroundMusic()" class="px-8 py-3 bg-gothicpurple/80 hover:bg-gothicpurple text-white font-cinzel tracking-widest rounded transition border border-moonlight/30 shadow-lg flex items-center gap-2 cursor-pointer">
                     <span id="musicStatusIcon">♰</span> <span id="musicBtnText">播放輓歌聖樂</span>
                 </button>
-                <a href="#portfolio" onclick="playGothicNote(130.81)" class="px-8 py-3 bg-charcoal border border-fogblue/60 hover:border-moonlight text-moonlight font-cinzel tracking-widest rounded transition">
-                    探尋作品
+                <a href="#stairsGame" onclick="playGothicNote(220)" class="px-8 py-3 bg-amber-900/60 hover:bg-amber-800 text-amber-200 border border-amber-500/40 font-cinzel tracking-widest rounded transition flex items-center gap-2">
+                    🪜 挑戰貓貓下樓梯
                 </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- 🪜 小遊戲：貓貓下樓梯 (NS-SHAFT Style) -->
+    <section id="stairsGame" class="relative z-10 py-16 bg-charcoal/40 border-b border-gothicpurple/30">
+        <div class="max-w-4xl mx-auto px-4 text-center space-y-6">
+            <div class="space-y-2">
+                <h2 class="text-3xl font-cinzel font-bold text-moonlight tracking-widest flex items-center justify-center gap-2">
+                    <span>🪜</span> 貓貓下樓梯：古宅地下室大冒險
+                </h2>
+                <p class="text-sm text-fogblue">控制黑貓不斷往地下深處跳躍，避免碰觸天花板尖刺或掉入無底深淵！</p>
+            </div>
+
+            <div class="bg-darkcard p-4 md:p-6 rounded-xl border border-gothicpurple/60 gothic-glow inline-block w-full max-w-lg relative">
+                <!-- 遊戲資訊列 -->
+                <div class="flex justify-between items-center mb-3 text-xs md:text-sm font-cinzel border-b border-gothicpurple/30 pb-2">
+                    <div class="flex items-center gap-1">
+                        <span>血量:</span>
+                        <span id="stairHpIcons" class="text-red-500 text-lg">❤️❤️❤️</span>
+                    </div>
+                    <div>深度: <span id="stairScore" class="text-amber-400 font-bold text-base">0</span> 階</div>
+                    <button onclick="initStairsGame()" class="px-3 py-1 bg-gothicpurple hover:bg-gothicpurple/80 text-white rounded text-xs transition">
+                        🔄 重新開始
+                    </button>
+                </div>
+
+                <!-- Canvas 遊戲畫面 -->
+                <div class="relative overflow-hidden rounded border border-gothicpurple/40 bg-black shadow-inner">
+                    <canvas id="stairsCanvas" width="380" height="480" class="w-full h-auto block mx-auto"></canvas>
+
+                    <!-- 遊戲結束 Overlay -->
+                    <div id="stairsGameOver" class="absolute inset-0 bg-black/85 backdrop-blur-sm flex flex-col items-center justify-center space-y-4 hidden">
+                        <p class="text-2xl font-bold font-cinzel text-red-500 tracking-wider">♰ 貓貓跌入了無底深淵 ♰</p>
+                        <p class="text-sm text-moonlight">本次下樓深度：<span id="finalStairScore" class="text-amber-400 font-bold text-lg">0</span> 階</p>
+                        <button onclick="initStairsGame()" class="px-6 py-2.5 bg-gothicpurple hover:bg-gothicpurple/80 text-white font-cinzel font-bold rounded shadow-lg transition">
+                            再次挑戰 🚀
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 手機 / 觸控按鈕區 -->
+                <div class="mt-4 flex justify-between gap-4">
+                    <button id="btnLeft" class="flex-1 py-3 bg-charcoal border border-gothicpurple/60 active:bg-gothicpurple text-moonlight rounded-lg font-bold text-lg select-none">
+                        ⬅️ 左移
+                    </button>
+                    <button id="btnRight" class="flex-1 py-3 bg-charcoal border border-gothicpurple/60 active:bg-gothicpurple text-moonlight rounded-lg font-bold text-lg select-none">
+                        右移 ➡️
+                    </button>
+                </div>
+                <p class="text-[10px] text-fogblue mt-2">提示：鍵盤請使用左右方向鍵 [ ← ] 與 [ → ] 控制移動</p>
             </div>
         </div>
     </section>
@@ -247,7 +300,7 @@
         </div>
     </section>
 
-    <!-- 內容區塊 3：小遊戲 -->
+    <!-- 內容區塊 3：死物解封對對碰 -->
     <section id="game" class="relative z-10 bg-charcoal/30 py-20 border-y border-gothicpurple/30">
         <div class="max-w-4xl mx-auto px-4">
             <div class="text-center space-y-3 mb-10">
@@ -655,7 +708,7 @@
             document.getElementById('mobileMenu').classList.toggle('hidden');
         });
 
-        /* 小遊戲系統 */
+        /* 死物解封小遊戲系統 */
         const gameItems = [
             { icon: '🎹', name: '塵封鋼琴' }, { icon: '💍', name: '怨咒血戒' },
             { icon: '🕯️', name: '幽冥燭臺' }, { icon: '🪞', name: '破裂古鏡' },
@@ -735,6 +788,255 @@
             }
         }
 
+        /* 🪜 小遊戲：貓貓下樓梯 (NS-SHAFT Style Engine) */
+        const stairCanvas = document.getElementById('stairsCanvas');
+        const sCtx = stairCanvas.getContext('2d');
+
+        let stairPlayer = { x: 170, y: 100, width: 28, height: 28, vx: 0, vy: 0, hp: 3, maxHp: 3 };
+        let stairsList = [];
+        let stairScore = 0;
+        let stairGameRunning = false;
+        let stairMoveLeft = false;
+        let stairMoveRight = false;
+        let stairFrameCount = 0;
+        let stairInvulnerable = 0;
+
+        function initStairsGame() {
+            stairPlayer = { x: 170, y: 80, width: 28, height: 28, vx: 0, vy: 0, hp: 3, maxHp: 3 };
+            stairsList = [];
+            stairScore = 0;
+            stairFrameCount = 0;
+            stairInvulnerable = 0;
+            stairGameRunning = true;
+            document.getElementById('stairsGameOver').classList.add('hidden');
+            document.getElementById('stairScore').innerText = '0';
+            updateHpDisplay();
+
+            // 生成初始安全階梯
+            for (let i = 0; i < 6; i++) {
+                stairsList.push({
+                    x: Math.random() * 260 + 20,
+                    y: 120 + i * 75,
+                    width: 90,
+                    height: 12,
+                    type: i === 0 ? 'normal' : getRandomStairType(),
+                    vx: 0
+                });
+            }
+
+            requestAnimationFrame(stairsGameLoop);
+        }
+
+        function getRandomStairType() {
+            const r = Math.random();
+            if (r < 0.5) return 'normal';
+            if (r < 0.7) return 'spring'; // 彈跳階梯
+            if (r < 0.85) return 'move';  // 移動階梯
+            return 'spike';              // 尖刺階梯
+        }
+
+        function updateHpDisplay() {
+            let hpStr = '';
+            for (let i = 0; i < stairPlayer.maxHp; i++) {
+                hpStr += i < stairPlayer.hp ? '❤️' : '🖤';
+            }
+            document.getElementById('stairHpIcons').innerText = hpStr;
+        }
+
+        function stairsGameLoop() {
+            if (!stairGameRunning) return;
+
+            sCtx.clearRect(0, 0, stairCanvas.width, stairCanvas.height);
+            stairFrameCount++;
+
+            // 頂部尖刺裝飾與傷害區
+            sCtx.fillStyle = '#7A0016';
+            for (let i = 0; i < stairCanvas.width; i += 20) {
+                sCtx.beginPath();
+                sCtx.moveTo(i, 0);
+                sCtx.lineTo(i + 10, 18);
+                sCtx.lineTo(i + 20, 0);
+                sCtx.fill();
+            }
+
+            // 左右移動控制
+            if (stairMoveLeft) stairPlayer.vx = -4.5;
+            else if (stairMoveRight) stairPlayer.vx = 4.5;
+            else stairPlayer.vx = 0;
+
+            stairPlayer.x += stairPlayer.vx;
+            stairPlayer.vy += 0.38; // 重力
+            stairPlayer.y += stairPlayer.vy;
+
+            // 牆壁碰撞
+            if (stairPlayer.x < 10) stairPlayer.x = 10;
+            if (stairPlayer.x > stairCanvas.width - stairPlayer.width - 10) {
+                stairPlayer.x = stairCanvas.width - stairPlayer.width - 10;
+            }
+
+            // 階梯向上推進 speed
+            const stairSpeed = 1.6 + Math.min(2.0, stairScore * 0.02);
+
+            let onAnyStair = false;
+
+            stairsList.forEach(stair => {
+                stair.y -= stairSpeed;
+
+                if (stair.type === 'move') {
+                    if (!stair.vx) stair.vx = Math.random() > 0.5 ? 1.5 : -1.5;
+                    stair.x += stair.vx;
+                    if (stair.x < 10 || stair.x > stairCanvas.width - stair.width - 10) stair.vx *= -1;
+                }
+
+                // 踩踏碰撞檢測
+                if (stairPlayer.vy >= 0 &&
+                    stairPlayer.x + stairPlayer.width > stair.x &&
+                    stairPlayer.x < stair.x + stair.width &&
+                    stairPlayer.y + stairPlayer.height >= stair.y &&
+                    stairPlayer.y + stairPlayer.height <= stair.y + 14) {
+
+                    onAnyStair = true;
+                    stairPlayer.y = stair.y - stairPlayer.height;
+                    stairPlayer.vy = 0;
+
+                    if (stair.type === 'spring') {
+                        stairPlayer.vy = -10; // 高高彈起
+                        playGothicNote(523.25, 'sine', 0.2);
+                    } else if (stair.type === 'spike') {
+                        if (stairInvulnerable <= 0) {
+                            stairPlayer.hp--;
+                            stairInvulnerable = 30;
+                            updateHpDisplay();
+                            playGothicNote(120, 'sawtooth', 0.4);
+                            if (stairPlayer.hp <= 0) endStairsGame();
+                        }
+                    } else if (stair.type === 'move') {
+                        stairPlayer.x += stair.vx;
+                    }
+                }
+
+                // 繪製階梯
+                if (stair.type === 'normal') {
+                    sCtx.fillStyle = '#4B0082';
+                    sCtx.fillRect(stair.x, stair.y, stair.width, stair.height);
+                } else if (stair.type === 'spring') {
+                    sCtx.fillStyle = '#2563EB';
+                    sCtx.fillRect(stair.x, stair.y, stair.width, stair.height);
+                    sCtx.fillStyle = '#93C5FD';
+                    sCtx.fillRect(stair.x + 10, stair.y - 3, stair.width - 20, 3);
+                } else if (stair.type === 'move') {
+                    sCtx.fillStyle = '#D97706';
+                    sCtx.fillRect(stair.x, stair.y, stair.width, stair.height);
+                } else if (stair.type === 'spike') {
+                    sCtx.fillStyle = '#DC2626';
+                    sCtx.fillRect(stair.x, stair.y, stair.width, stair.height);
+                    sCtx.fillStyle = '#F87171';
+                    for (let px = stair.x + 4; px < stair.x + stair.width; px += 10) {
+                        sCtx.beginPath();
+                        sCtx.moveTo(px, stair.y);
+                        sCtx.lineTo(px + 4, stair.y - 6);
+                        sCtx.lineTo(px + 8, stair.y);
+                        sCtx.fill();
+                    }
+                }
+            });
+
+            // 移除出界階梯與補產生新階梯
+            stairsList = stairsList.filter(s => s.y > -20);
+            const lastStair = stairsList[stairsList.length - 1];
+            if (!lastStair || lastStair.y < stairCanvas.height - 70) {
+                stairsList.push({
+                    x: Math.random() * (stairCanvas.width - 110) + 10,
+                    y: stairCanvas.height + 10,
+                    width: Math.floor(Math.random() * 20) + 80,
+                    height: 12,
+                    type: getRandomStairType(),
+                    vx: 0
+                });
+                stairScore++;
+                document.getElementById('stairScore').innerText = stairScore;
+            }
+
+            // 無敵閃爍扣減
+            if (stairInvulnerable > 0) stairInvulnerable--;
+
+            // 繪製黑貓主角
+            if (stairInvulnerable % 4 < 2) {
+                sCtx.fillStyle = '#18181A';
+                sCtx.beginPath();
+                sCtx.arc(stairPlayer.x + 14, stairPlayer.y + 14, 13, 0, Math.PI * 2);
+                sCtx.fill();
+
+                // 耳朵
+                sCtx.polygon = (pts, color) => {
+                    sCtx.fillStyle = color; sCtx.beginPath();
+                    sCtx.moveTo(pts[0][0], pts[0][1]);
+                    for (let p = 1; p < pts.length; p++) sCtx.lineTo(pts[p][0], pts[p][1]);
+                    sCtx.closePath(); sCtx.fill();
+                };
+                sCtx.polygon([[stairPlayer.x + 2, stairPlayer.y + 5], [stairPlayer.x + 8, stairPlayer.y - 5], [stairPlayer.x + 14, stairPlayer.y + 5]], '#18181A');
+                sCtx.polygon([[stairPlayer.x + 14, stairPlayer.y + 5], [stairPlayer.x + 20, stairPlayer.y - 5], [stairPlayer.x + 26, stairPlayer.y + 5]], '#18181A');
+
+                // 大黃眼
+                sCtx.fillStyle = '#FFCC00';
+                sCtx.beginPath(); sCtx.arc(stairPlayer.x + 9, stairPlayer.y + 12, 4, 0, Math.PI * 2); sCtx.fill();
+                sCtx.beginPath(); sCtx.arc(stairPlayer.x + 19, stairPlayer.y + 12, 4, 0, Math.PI * 2); sCtx.fill();
+                sCtx.fillStyle = '#000';
+                sCtx.fillRect(stairPlayer.x + 8.5, stairPlayer.y + 10, 1.5, 4);
+                sCtx.fillRect(stairPlayer.x + 18.5, stairPlayer.y + 10, 1.5, 4);
+            }
+
+            // 觸頂尖刺判斷
+            if (stairPlayer.y <= 18) {
+                if (stairInvulnerable <= 0) {
+                    stairPlayer.hp--;
+                    stairPlayer.vy = 4; // 反彈向下
+                    stairInvulnerable = 30;
+                    updateHpDisplay();
+                    playGothicNote(100, 'sawtooth', 0.5);
+                    if (stairPlayer.hp <= 0) endStairsGame();
+                }
+            }
+
+            // 掉落底部深淵判斷
+            if (stairPlayer.y > stairCanvas.height + 30) {
+                endStairsGame();
+            }
+
+            requestAnimationFrame(stairsGameLoop);
+        }
+
+        function endStairsGame() {
+            stairGameRunning = false;
+            document.getElementById('finalStairScore').innerText = stairScore;
+            document.getElementById('stairsGameOver').classList.remove('hidden');
+            playGothicNote(90, 'sawtooth', 1.0);
+        }
+
+        // 鍵盤操控事件
+        window.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft') stairMoveLeft = true;
+            if (e.key === 'ArrowRight') stairMoveRight = true;
+        });
+        window.addEventListener('keyup', (e) => {
+            if (e.key === 'ArrowLeft') stairMoveLeft = false;
+            if (e.key === 'ArrowRight') stairMoveRight = false;
+        });
+
+        // 手機觸控按鈕綁定
+        const btnLeft = document.getElementById('btnLeft');
+        const btnRight = document.getElementById('btnRight');
+
+        btnLeft.addEventListener('touchstart', (e) => { e.preventDefault(); stairMoveLeft = true; });
+        btnLeft.addEventListener('touchend', (e) => { e.preventDefault(); stairMoveLeft = false; });
+        btnLeft.addEventListener('mousedown', () => stairMoveLeft = true);
+        btnLeft.addEventListener('mouseup', () => stairMoveLeft = false);
+
+        btnRight.addEventListener('touchstart', (e) => { e.preventDefault(); stairMoveRight = true; });
+        btnRight.addEventListener('touchend', (e) => { e.preventDefault(); stairMoveRight = false; });
+        btnRight.addEventListener('mousedown', () => stairMoveRight = true);
+        btnRight.addEventListener('mouseup', () => stairMoveRight = false);
+
         /* 🐾 獨立貓貓模板系統 (貓耳置頂確保保留) */
         let petX = 100;
         let petY = window.innerHeight - 90;
@@ -756,7 +1058,6 @@
         const droppedFoodIconEl = document.getElementById('droppedFoodIcon');
         const catTreeEl = document.getElementById('catTree');
 
-        // 通用貓耳圖層 (繪製在帽子/服裝的最上方)
         const commonEarsSvg = `
             <g class="cat-ears-top-layer">
                 <polygon points="28,32 38,10 48,28" fill="#18181A" />
@@ -1299,6 +1600,7 @@
         renderCatTemplate('classic');
         renderPortfolio();
         resetGame();
+        initStairsGame();
     </script>
 </body>
 </html>
