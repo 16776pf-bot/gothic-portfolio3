@@ -50,7 +50,7 @@
         }
         .flicker-text { animation: subtleFlicker 4s infinite ease-in-out; }
 
-        /* 🐾 大眼黃睛黑貓客製化 SVG 狀態與動畫 */
+        /* 🐾 寵物動畫樣式 */
         .cat-tail {
             transform-origin: bottom center;
             animation: tailWag 2.5s infinite ease-in-out;
@@ -93,6 +93,22 @@
             0% { transform: rotate(-8deg) scale(1.1); }
             100% { transform: rotate(8deg) scale(1.1); }
         }
+
+        /* 🙀 突襲佔據全螢幕動畫 */
+        @keyframes jumpscarePop {
+            0% { transform: scale(0.1) rotate(-20deg); opacity: 0; }
+            50% { transform: scale(1.1) rotate(5deg); opacity: 1; }
+            70% { transform: scale(0.95) rotate(-2deg); }
+            100% { transform: scale(1) rotate(0deg); opacity: 1; }
+        }
+        .jumpscare-anim {
+            animation: jumpscarePop 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+        }
+        @keyframes eyeGlowFlicker {
+            0%, 100% { filter: drop-shadow(0 0 15px #FFCC00); }
+            50% { filter: drop-shadow(0 0 35px #FF0000); }
+        }
+        .eye-glow { animation: eyeGlowFlicker 0.3s infinite alternate; }
     </style>
 </head>
 <body class="relative min-h-screen overflow-x-hidden selection:bg-gothicpurple selection:text-white">
@@ -285,30 +301,33 @@
         </div>
     </section>
 
-    <!-- 🐾 哥德黑貓小寵物 UI 控制按鈕 -->
+    <!-- 🐾 哥德黑貓小寵物 UI 控制面板 -->
     <div id="petUi" class="fixed bottom-4 right-4 z-50 flex flex-col items-center select-none">
-        <div id="petBubble" class="hidden mb-2 px-3 py-1 bg-darkcard/90 border border-gothicpurple text-moonlight text-xs rounded-lg shadow-lg font-cinzel animate-bounce">
-            <span id="petSpeech">喵～ (親密度 +1)</span>
-        </div>
-        <div class="flex gap-2 mb-2 bg-darkcard/80 p-1.5 rounded-full border border-gothicpurple/50 backdrop-blur">
-            <button onclick="feedPet()" class="px-2 py-1 bg-gothicpurple/60 hover:bg-gothicpurple text-xs text-white rounded-full transition flex items-center gap-1 cursor-pointer">
+        <div class="flex gap-2 mb-2 bg-darkcard/80 p-1.5 rounded-full border border-gothicpurple/50 backdrop-blur shadow-2xl">
+            <button onclick="feedPet()" class="px-2.5 py-1 bg-gothicpurple/60 hover:bg-gothicpurple text-xs text-white rounded-full transition flex items-center gap-1 cursor-pointer">
                 🐟 餵食
             </button>
-            <button onclick="petInteract()" class="px-2 py-1 bg-charcoal hover:bg-fogblue text-xs text-moonlight rounded-full transition flex items-center gap-1 cursor-pointer">
+            <button onclick="petInteract()" class="px-2.5 py-1 bg-charcoal hover:bg-fogblue text-xs text-moonlight rounded-full transition flex items-center gap-1 cursor-pointer">
                 ✨ 撫摸
             </button>
-            <button onclick="petSpecialTrick()" class="px-2 py-1 bg-bloodred/80 hover:bg-bloodred text-xs text-white rounded-full transition flex items-center gap-1 cursor-pointer">
-                🎃 萬聖南瓜
+            <button onclick="triggerJumpscare()" class="px-2.5 py-1 bg-bloodred hover:bg-red-700 text-xs text-white rounded-full transition flex items-center gap-1 cursor-pointer font-bold">
+                👻 突襲
             </button>
         </div>
     </div>
 
-    <!-- 🐾 根據設計圖向量繪製的大眼黃睛黑貓 (可自由拖動) -->
+    <!-- 🐾 隨貓移動的大眼黃睛黑貓實體 (包含隨行字幕對話框) -->
     <div id="pet" class="cursor-grab select-none relative w-16 h-16" style="position: fixed; bottom: 20px; left: 100px; z-index: 9999;">
-        <!-- 南瓜帽子 (預設隱藏) -->
-        <div id="pumpkinHat" class="hidden absolute -top-4 left-3 text-xl z-20">🎃</div>
+        <!-- 💬 隨貓移動的專屬對話字幕泡泡 -->
+        <div id="petBubble" class="hidden absolute -top-12 left-1/2 -translate-x-1/2 whitespace-nowrap px-3 py-1 bg-darkcard/95 border border-gothicpurple text-moonlight text-xs rounded-lg shadow-2xl font-cinzel animate-bounce z-30 pointer-events-none">
+            <span id="petSpeech">喵～ (親密度 +1)</span>
+            <div class="absolute -bottom-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-darkcard border-r border-b border-gothicpurple rotate-45"></div>
+        </div>
+
+        <!-- 南瓜帽子 -->
+        <div id="pumpkinHat" class="hidden absolute -top-4 left-3 text-xl z-20 pointer-events-none">🎃</div>
         <!-- 食物動畫 -->
-        <div id="petFood" class="hidden absolute -top-8 left-4 text-2xl z-20">🐟</div>
+        <div id="petFood" class="hidden absolute -top-8 left-4 text-2xl z-20 pointer-events-none">🐟</div>
 
         <div id="catSvgContainer" class="w-full h-full relative">
             <svg id="catSvg" viewBox="0 0 100 100" class="w-full h-full drop-shadow-md">
@@ -332,21 +351,19 @@
                 <g id="catEyesNormal">
                     <ellipse cx="38" cy="42" rx="9" ry="11" fill="#FFCC00" />
                     <ellipse cx="62" cy="42" rx="9" ry="11" fill="#FFCC00" />
-                    <!-- 黑色瞳孔 -->
                     <ellipse id="pupilL" cx="38" cy="42" rx="5" ry="8" fill="#000000" />
                     <ellipse id="pupilR" cx="62" cy="42" rx="5" ry="8" fill="#000000" />
-                    <!-- 眼睛高光點 -->
                     <circle cx="35" cy="38" r="2.5" fill="#FFFFFF" />
                     <circle cx="59" cy="38" r="2.5" fill="#FFFFFF" />
                 </g>
 
-                <!-- 眼睛: 瞇眼/開心表情 (預設隱藏) -->
+                <!-- 眼睛: 瞇眼/開心表情 -->
                 <g id="catEyesHappy" class="hidden">
                     <path d="M 29,42 Q 38,32 47,42" stroke="#FFCC00" stroke-width="3.5" fill="none" stroke-linecap="round"/>
                     <path d="M 53,42 Q 62,32 71,42" stroke="#FFCC00" stroke-width="3.5" fill="none" stroke-linecap="round"/>
                 </g>
 
-                <!-- 眼睛: 被抓起/驚訝大眼 (預設隱藏) -->
+                <!-- 眼睛: 被抓起/驚訝大眼 -->
                 <g id="catEyesSurprised" class="hidden">
                     <circle cx="38" cy="42" r="11" fill="#FFCC00" />
                     <circle cx="62" cy="42" r="11" fill="#FFCC00" />
@@ -363,6 +380,42 @@
                 <path d="M 46,56 Q 50,59 50,56 Q 50,59 54,56" stroke="#555" stroke-width="1.5" fill="none" stroke-linecap="round" />
             </svg>
         </div>
+    </div>
+
+    <!-- 🙀 全螢幕突襲黑貓巨臉 Overlay -->
+    <div id="jumpscareOverlay" onclick="closeJumpscare()" class="fixed inset-0 z-[99999] bg-black/90 backdrop-blur-lg flex flex-col items-center justify-center hidden cursor-pointer select-none">
+        <div id="jumpscareContent" class="relative w-[85vw] max-w-[600px] h-[85vw] max-h-[600px] jumpscare-anim flex items-center justify-center">
+            <svg viewBox="0 0 100 100" class="w-full h-full filter drop-shadow-[0_0_50px_rgba(75,0,130,0.8)]">
+                <!-- 巨大黑貓頭部 -->
+                <ellipse cx="50" cy="50" rx="45" ry="40" fill="#121214" />
+                <!-- 巨大耳朵 -->
+                <polygon points="12,30 28,2 45,25" fill="#121214" />
+                <polygon points="18,28 28,8 38,24" fill="#3A0007" />
+                <polygon points="55,25 72,2 88,30" fill="#121214" />
+                <polygon points="62,24 72,8 82,28" fill="#3A0007" />
+                
+                <!-- 🌕 巨大閃爍黃睛巨眼 -->
+                <g class="eye-glow">
+                    <circle cx="32" cy="45" r="16" fill="#FFCC00" />
+                    <circle cx="68" cy="45" r="16" fill="#FFCC00" />
+                    <ellipse cx="32" cy="45" rx="4" ry="13" fill="#000" />
+                    <ellipse cx="68" cy="45" rx="4" ry="13" fill="#000" />
+                    <circle cx="27" cy="38" r="4" fill="#FFF" />
+                    <circle cx="63" cy="38" r="4" fill="#FFF" />
+                </g>
+
+                <!-- 粉紅鼻子與尖牙巨嘴 -->
+                <polygon points="46,60 54,60 50,65" fill="#FFB6C1" />
+                <path d="M 40,68 Q 50,78 60,68" stroke="#FF0033" stroke-width="3" fill="none" stroke-linecap="round"/>
+                <!-- 尖牙 -->
+                <polygon points="43,68 46,73 48,68" fill="#FFF" />
+                <polygon points="52,68 54,73 57,68" fill="#FFF" />
+            </svg>
+        </div>
+        <p class="mt-6 text-2xl md:text-4xl font-bold font-cinzel text-bloodred tracking-widest animate-ping text-center px-4">
+            ♰ 被我佔據了吧！喵嘻嘻... ♰
+        </p>
+        <span class="text-xs text-fogblue mt-4">( 點擊螢幕任何地方關閉驚喜 )</span>
     </div>
 
     <!-- 頁尾 -->
@@ -456,7 +509,7 @@
 
             myWorks.forEach((work, index) => {
                 const card = document.createElement('div');
-                card.className = 'bg-darkcard rounded-lg overflow-hidden gothic-glow transition duration-300 group cursor-pointer relative';
+                card.className = 'bg-darkcard rounded-lg overflow-hidden gothic-glow transition duration-300 group cursor-pointer relative work-card-item';
                 card.onclick = () => openModal(work.title, work.category, work.date, work.fullDesc, work.tag, work.imageUrl);
 
                 const mediaHeader = work.imageUrl 
@@ -661,10 +714,12 @@
 
         function renderCards() {
             const grid = document.getElementById('cardGrid');
+            if (!grid) return;
             grid.innerHTML = '';
             cardsData.forEach((card, index) => {
                 const cardEl = document.createElement('div');
-                cardEl.className = 'h-24 bg-charcoal rounded border border-gothicpurple/50 flex items-center justify-center text-2xl cursor-pointer select-none transition-all duration-300 hover:border-moonlight gothic-glow';
+                cardEl.className = 'h-24 bg-charcoal rounded border border-gothicpurple/50 flex items-center justify-center text-2xl cursor-pointer select-none transition-all duration-300 hover:border-moonlight gothic-glow game-card-item';
+                cardEl.setAttribute('data-card-index', index);
                 if (card.flipped || card.matched) {
                     cardEl.innerText = card.icon;
                     cardEl.classList.add('bg-gothicpurple/40', 'border-moonlight');
@@ -719,7 +774,7 @@
             }
         }
 
-        /* 🐾 大眼黃睛黑貓 AI 與互動核心 */
+        /* 🐾 大眼黃睛黑貓 AI 漫遊 & 驚喜突襲佔據全螢幕 */
         let petX = 100;
         let petY = window.innerHeight - 90;
         let petDirection = 1;
@@ -733,6 +788,7 @@
         const pumpkinHatEl = document.getElementById('pumpkinHat');
         const bubbleEl = document.getElementById('petBubble');
         const speechEl = document.getElementById('petSpeech');
+        const jumpscareOverlay = document.getElementById('jumpscareOverlay');
 
         const eyesNormal = document.getElementById('catEyesNormal');
         const eyesHappy = document.getElementById('catEyesHappy');
@@ -760,39 +816,114 @@
             petEl.classList.remove('pet-walking', 'pet-running', 'pet-jump', 'pet-stretch', 'pet-spin', 'pet-dragged');
         }
 
-        // 🐾 AI 漫遊
+        // 🙀 驚喜突襲全螢幕
+        function triggerJumpscare() {
+            playGothicNote(100, 'sawtooth', 1.5); // 低沉震動重音
+            jumpscareOverlay.classList.remove('hidden');
+            
+            // 2.5 秒後自動關閉
+            setTimeout(() => {
+                closeJumpscare();
+            }, 2800);
+        }
+
+        function closeJumpscare() {
+            jumpscareOverlay.classList.add('hidden');
+            speak("喵嘻嘻～ 有沒有被嚇一跳？ 🎃", 2500);
+        }
+
+        // 🐾 AI 漫遊與隨機觸發互動事件
         function petAiLoop() {
-            if (isDragging || petState === 'eating' || petState === 'dragged') return;
+            if (isDragging || petState === 'eating' || petState === 'dragged' || petState === 'interacting') return;
 
             const rand = Math.random();
 
-            if (rand < 0.35) { // 散步
+            if (rand < 0.08) { // 8% 機率突然發動全螢幕突襲驚喜！
+                triggerJumpscare();
+            } else if (rand < 0.22) { // 偷玩卡牌小遊戲
+                tryPlayGameCard();
+            } else if (rand < 0.36) { // 偷看作品集
+                tryClickWorkCard();
+            } else if (rand < 0.62) { // 普通散步
                 startWalking(false);
-            } else if (rand < 0.50) { // 跑步
-                startWalking(true);
-            } else if (rand < 0.65) { // 伸懶腰
+            } else if (rand < 0.78) { // 伸懶腰
                 petState = 'stretching';
                 clearPetAnimations();
                 petEl.classList.add('pet-stretch');
                 setCatExpression('happy');
-                speak("伸懶腰... (伸縮自如的黑貓)", 2000);
+                speak("伸懶腰... (喵吼~)", 2000);
                 setTimeout(() => {
                     if (!isDragging) {
                         petState = 'idle';
                         setCatExpression('normal');
                     }
                 }, 1200);
-            } else if (rand < 0.80) { // 坐著看你
+            } else { // 趴著看活人
                 petState = 'idle';
                 clearPetAnimations();
                 setCatExpression('happy');
-                speak("黃色大眼睛眨啊眨～ 瞅著你", 2200);
+                speak("黃色大眼睛眨眨～ 觀察你中", 2200);
                 setTimeout(() => setCatExpression('normal'), 2200);
-            } else {
-                petState = 'idle';
-                clearPetAnimations();
-                setCatExpression('normal');
             }
+        }
+
+        // 🎮 主動互動 1：貓貓主動偷玩「詛咒對對碰」小遊戲
+        function tryPlayGameCard() {
+            const unเปิดCards = Array.from(document.querySelectorAll('.game-card-item')).filter(el => {
+                const idx = el.getAttribute('data-card-index');
+                return cardsData[idx] && !cardsData[idx].flipped && !cardsData[idx].matched;
+            });
+
+            if (unเปิดCards.length === 0) {
+                startWalking(false);
+                return;
+            }
+
+            petState = 'interacting';
+            speak("發現好玩的東西！偷翻一張牌 🐾", 2500);
+
+            const targetCard = unเปิดCards[Math.floor(Math.random() * unเปิดCards.length)];
+            const idx = targetCard.getAttribute('data-card-index');
+
+            clearPetAnimations();
+            petEl.classList.add('pet-jump');
+            setCatExpression('happy');
+
+            setTimeout(() => {
+                handleCardClick(parseInt(idx));
+                setTimeout(() => {
+                    clearPetAnimations();
+                    setCatExpression('normal');
+                    petState = 'idle';
+                }, 800);
+            }, 600);
+        }
+
+        // 🖼️ 主動互動 2：貓貓主動踩/點開作品集卡片
+        function tryClickWorkCard() {
+            const workCards = document.querySelectorAll('.work-card-item');
+            if (workCards.length === 0) {
+                startWalking(false);
+                return;
+            }
+
+            petState = 'interacting';
+            speak("這張作品很讚！幫你打開看看 🐾", 2500);
+
+            const randomWork = workCards[Math.floor(Math.random() * workCards.length)];
+
+            clearPetAnimations();
+            petEl.classList.add('pet-spin');
+            setCatExpression('happy');
+
+            setTimeout(() => {
+                randomWork.click();
+                setTimeout(() => {
+                    clearPetAnimations();
+                    setCatExpression('normal');
+                    petState = 'idle';
+                }, 800);
+            }, 700);
         }
 
         function startWalking(isRunning = false) {
@@ -807,8 +938,6 @@
             const speed = isRunning ? 5 : 2;
             const distance = Math.floor(Math.random() * (isRunning ? 220 : 120)) + 60;
             let moved = 0;
-
-            if (isRunning) speak("⚡ 小黑貓快速踱步中！", 1500);
 
             const walkInterval = setInterval(() => {
                 if (isDragging || petState === 'eating' || moved >= distance) {
@@ -918,25 +1047,6 @@
                     petState = 'idle';
                     setCatExpression('normal');
                 }, 500);
-            }, 800);
-        }
-
-        // 🎃 萬聖南瓜主題裝扮
-        function petSpecialTrick() {
-            if (isDragging) return;
-            playGothicNote(587.33, 'sine', 0.8);
-            clearPetAnimations();
-            petEl.classList.add('pet-spin');
-
-            pumpkinHatEl.classList.toggle('hidden');
-            const isHatOn = !pumpkinHatEl.classList.contains('hidden');
-
-            setCatExpression('happy');
-            speak(isHatOn ? "🎃 戴上萬聖節南瓜帽！可愛加倍" : "✨ 摘下南瓜帽～", 2500);
-
-            setTimeout(() => {
-                clearPetAnimations();
-                setCatExpression('normal');
             }, 800);
         }
 
