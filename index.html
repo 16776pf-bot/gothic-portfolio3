@@ -50,7 +50,11 @@
         }
         .flicker-text { animation: subtleFlicker 4s infinite ease-in-out; }
 
-        /* 🐾 寵物豐富動畫庫 */
+        /* 🐾 大眼黃睛黑貓客製化 SVG 狀態與動畫 */
+        .cat-tail {
+            transform-origin: bottom center;
+            animation: tailWag 2.5s infinite ease-in-out;
+        }
         .pet-walking { animation: petWaddle 0.4s infinite alternate ease-in-out; }
         .pet-running { animation: petRun 0.25s infinite alternate ease-in-out; }
         .pet-jump { animation: petJump 0.5s ease-out; }
@@ -58,32 +62,36 @@
         .pet-spin { animation: petSpin 0.8s ease-in-out; }
         .pet-dragged { animation: petHang 0.5s infinite alternate ease-in-out; cursor: grabbing !important; }
 
+        @keyframes tailWag {
+            0%, 100% { transform: rotate(-5deg); }
+            50% { transform: rotate(15deg); }
+        }
         @keyframes petWaddle {
-            0% { transform: translateY(0) rotate(-4deg); }
-            100% { transform: translateY(-5px) rotate(4deg); }
+            0% { transform: translateY(0) rotate(-3deg); }
+            100% { transform: translateY(-6px) rotate(3deg); }
         }
         @keyframes petRun {
-            0% { transform: translateY(0) scaleY(0.9) rotate(-8deg); }
-            100% { transform: translateY(-10px) scaleY(1.1) rotate(8deg); }
+            0% { transform: translateY(0) scaleY(0.9) rotate(-6deg); }
+            100% { transform: translateY(-12px) scaleY(1.1) rotate(6deg); }
         }
         @keyframes petJump {
             0% { transform: translateY(0); }
-            50% { transform: translateY(-35px) scale(1.2); }
+            50% { transform: translateY(-40px) scale(1.1); }
             100% { transform: translateY(0); }
         }
         @keyframes petStretch {
-            0% { transform: scaleX(1) scaleY(1); }
-            50% { transform: scaleX(1.3) scaleY(0.7) translateY(4px); }
-            100% { transform: scaleX(1) scaleY(1); }
+            0% { transform: scale(1); }
+            50% { transform: scaleX(1.25) scaleY(0.8) translateY(8px); }
+            100% { transform: scale(1); }
         }
         @keyframes petSpin {
-            0% { transform: rotate(0deg) scale(1); }
-            50% { transform: rotate(180deg) scale(1.3); }
-            100% { transform: rotate(360deg) scale(1); }
+            0% { transform: rotate(0deg); }
+            50% { transform: rotate(180deg) scale(1.2); }
+            100% { transform: rotate(360deg); }
         }
         @keyframes petHang {
-            0% { transform: rotate(-10deg) scale(1.15); }
-            100% { transform: rotate(10deg) scale(1.15); }
+            0% { transform: rotate(-8deg) scale(1.1); }
+            100% { transform: rotate(8deg) scale(1.1); }
         }
     </style>
 </head>
@@ -277,7 +285,7 @@
         </div>
     </section>
 
-    <!-- 🐾 哥德黑貓小寵物 UI 按鈕面板 -->
+    <!-- 🐾 哥德黑貓小寵物 UI 控制按鈕 -->
     <div id="petUi" class="fixed bottom-4 right-4 z-50 flex flex-col items-center select-none">
         <div id="petBubble" class="hidden mb-2 px-3 py-1 bg-darkcard/90 border border-gothicpurple text-moonlight text-xs rounded-lg shadow-lg font-cinzel animate-bounce">
             <span id="petSpeech">喵～ (親密度 +1)</span>
@@ -290,15 +298,71 @@
                 ✨ 撫摸
             </button>
             <button onclick="petSpecialTrick()" class="px-2 py-1 bg-bloodred/80 hover:bg-bloodred text-xs text-white rounded-full transition flex items-center gap-1 cursor-pointer">
-                🔮 魔法
+                🎃 萬聖南瓜
             </button>
         </div>
     </div>
 
-    <!-- 🐾 可自由拖動的黑貓本體 -->
-    <div id="pet" class="cursor-grab text-4xl select-none relative" style="position: fixed; bottom: 20px; left: 100px; z-index: 9999;">
-        <span id="petAvatar">🐈‍⬛</span>
-        <div id="petFood" class="hidden absolute -top-8 left-2 text-2xl">🐟</div>
+    <!-- 🐾 根據設計圖向量繪製的大眼黃睛黑貓 (可自由拖動) -->
+    <div id="pet" class="cursor-grab select-none relative w-16 h-16" style="position: fixed; bottom: 20px; left: 100px; z-index: 9999;">
+        <!-- 南瓜帽子 (預設隱藏) -->
+        <div id="pumpkinHat" class="hidden absolute -top-4 left-3 text-xl z-20">🎃</div>
+        <!-- 食物動畫 -->
+        <div id="petFood" class="hidden absolute -top-8 left-4 text-2xl z-20">🐟</div>
+
+        <div id="catSvgContainer" class="w-full h-full relative">
+            <svg id="catSvg" viewBox="0 0 100 100" class="w-full h-full drop-shadow-md">
+                <!-- 尾巴 -->
+                <path class="cat-tail" d="M 30,75 C 10,80 5,50 15,40 C 20,35 22,45 18,55 C 12,65 25,70 32,68 Z" fill="#18181A" />
+                <!-- 貓咪身體 -->
+                <ellipse cx="50" cy="68" rx="22" ry="20" fill="#18181A" />
+                <!-- 前腳 -->
+                <ellipse cx="40" cy="84" rx="6" ry="10" fill="#18181A" />
+                <ellipse cx="60" cy="84" rx="6" ry="10" fill="#18181A" />
+                <!-- 貓咪頭部 -->
+                <ellipse cx="50" cy="45" rx="26" ry="22" fill="#18181A" />
+                <!-- 左耳朵 -->
+                <polygon points="28,32 38,10 48,28" fill="#18181A" />
+                <polygon points="32,30 38,15 44,28" fill="#2B2B2E" />
+                <!-- 右耳朵 -->
+                <polygon points="52,28 62,10 72,32" fill="#18181A" />
+                <polygon points="56,28 62,15 68,30" fill="#2B2B2E" />
+                
+                <!-- 🟡 經典黃色大眼睛 -->
+                <g id="catEyesNormal">
+                    <ellipse cx="38" cy="42" rx="9" ry="11" fill="#FFCC00" />
+                    <ellipse cx="62" cy="42" rx="9" ry="11" fill="#FFCC00" />
+                    <!-- 黑色瞳孔 -->
+                    <ellipse id="pupilL" cx="38" cy="42" rx="5" ry="8" fill="#000000" />
+                    <ellipse id="pupilR" cx="62" cy="42" rx="5" ry="8" fill="#000000" />
+                    <!-- 眼睛高光點 -->
+                    <circle cx="35" cy="38" r="2.5" fill="#FFFFFF" />
+                    <circle cx="59" cy="38" r="2.5" fill="#FFFFFF" />
+                </g>
+
+                <!-- 眼睛: 瞇眼/開心表情 (預設隱藏) -->
+                <g id="catEyesHappy" class="hidden">
+                    <path d="M 29,42 Q 38,32 47,42" stroke="#FFCC00" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+                    <path d="M 53,42 Q 62,32 71,42" stroke="#FFCC00" stroke-width="3.5" fill="none" stroke-linecap="round"/>
+                </g>
+
+                <!-- 眼睛: 被抓起/驚訝大眼 (預設隱藏) -->
+                <g id="catEyesSurprised" class="hidden">
+                    <circle cx="38" cy="42" r="11" fill="#FFCC00" />
+                    <circle cx="62" cy="42" r="11" fill="#FFCC00" />
+                    <circle cx="38" cy="42" r="3" fill="#000" />
+                    <circle cx="62" cy="42" r="3" fill="#000" />
+                    <circle cx="34" cy="37" r="2" fill="#FFF" />
+                    <circle cx="58" cy="37" r="2" fill="#FFF" />
+                </g>
+
+                <!-- 🌸 小粉紅鼻子 -->
+                <polygon points="48,51 52,51 50,54" fill="#FFB6C1" />
+
+                <!-- 嘴巴 -->
+                <path d="M 46,56 Q 50,59 50,56 Q 50,59 54,56" stroke="#555" stroke-width="1.5" fill="none" stroke-linecap="round" />
+            </svg>
+        </div>
     </div>
 
     <!-- 頁尾 -->
@@ -655,21 +719,35 @@
             }
         }
 
-        /* 🐾 升級版：歌德黑貓 AI 漫遊 & 滑鼠拖動系統 */
+        /* 🐾 大眼黃睛黑貓 AI 與互動核心 */
         let petX = 100;
-        let petY = window.innerHeight - 80;
+        let petY = window.innerHeight - 90;
         let petDirection = 1;
-        let petState = 'idle'; // 'idle', 'walking', 'running', 'stretching', 'eating', 'dragged'
+        let petState = 'idle';
         let isDragging = false;
         let dragOffsetX = 0, dragOffsetY = 0;
 
         const petEl = document.getElementById('pet');
-        const avatarEl = document.getElementById('petAvatar');
+        const catSvgContainer = document.getElementById('catSvgContainer');
         const foodEl = document.getElementById('petFood');
+        const pumpkinHatEl = document.getElementById('pumpkinHat');
         const bubbleEl = document.getElementById('petBubble');
         const speechEl = document.getElementById('petSpeech');
 
-        // 對話泡泡
+        const eyesNormal = document.getElementById('catEyesNormal');
+        const eyesHappy = document.getElementById('catEyesHappy');
+        const eyesSurprised = document.getElementById('catEyesSurprised');
+
+        function setCatExpression(expr = 'normal') {
+            eyesNormal.classList.add('hidden');
+            eyesHappy.classList.add('hidden');
+            eyesSurprised.classList.add('hidden');
+
+            if (expr === 'happy') eyesHappy.classList.remove('hidden');
+            else if (expr === 'surprised') eyesSurprised.classList.remove('hidden');
+            else eyesNormal.classList.remove('hidden');
+        }
+
         function speak(text, duration = 2500) {
             speechEl.innerText = text;
             bubbleEl.classList.remove('hidden');
@@ -678,12 +756,11 @@
             }, duration);
         }
 
-        // 清除所有動作動畫類別
         function clearPetAnimations() {
             petEl.classList.remove('pet-walking', 'pet-running', 'pet-jump', 'pet-stretch', 'pet-spin', 'pet-dragged');
         }
 
-        // 🐾 AI 漫遊核心演算法
+        // 🐾 AI 漫遊
         function petAiLoop() {
             if (isDragging || petState === 'eating' || petState === 'dragged') return;
 
@@ -691,44 +768,47 @@
 
             if (rand < 0.35) { // 散步
                 startWalking(false);
-            } else if (rand < 0.50) { // 快速奔跑/發瘋
+            } else if (rand < 0.50) { // 跑步
                 startWalking(true);
             } else if (rand < 0.65) { // 伸懶腰
                 petState = 'stretching';
                 clearPetAnimations();
                 petEl.classList.add('pet-stretch');
-                avatarEl.innerText = '🐈‍⬛';
-                speak("伸懶腰... 喵~", 2000);
-                setTimeout(() => { if (!isDragging) petState = 'idle'; }, 1200);
-            } else if (rand < 0.80) { // 坐下休息/喵喵叫
+                setCatExpression('happy');
+                speak("伸懶腰... (伸縮自如的黑貓)", 2000);
+                setTimeout(() => {
+                    if (!isDragging) {
+                        petState = 'idle';
+                        setCatExpression('normal');
+                    }
+                }, 1200);
+            } else if (rand < 0.80) { // 坐著看你
                 petState = 'idle';
                 clearPetAnimations();
-                avatarEl.innerText = '😽';
-                if (Math.random() > 0.5) speak("喵嗚～ 靜靜看著你", 2000);
-            } else { // 趴著打盹
+                setCatExpression('happy');
+                speak("黃色大眼睛眨啊眨～ 瞅著你", 2200);
+                setTimeout(() => setCatExpression('normal'), 2200);
+            } else {
                 petState = 'idle';
                 clearPetAnimations();
-                avatarEl.innerText = '🐈‍⬛';
+                setCatExpression('normal');
             }
         }
 
-        // 移動/走路邏輯
         function startWalking(isRunning = false) {
             petState = isRunning ? 'running' : 'walking';
             clearPetAnimations();
             petEl.classList.add(isRunning ? 'pet-running' : 'pet-walking');
-            avatarEl.innerText = '🐈‍⬛';
+            setCatExpression('normal');
 
-            // 隨機轉向
             petDirection = Math.random() > 0.5 ? 1 : -1;
-            avatarEl.style.display = 'inline-block';
-            avatarEl.style.transform = petDirection === 1 ? 'scaleX(1)' : 'scaleX(-1)';
+            catSvgContainer.style.transform = petDirection === 1 ? 'scaleX(1)' : 'scaleX(-1)';
 
             const speed = isRunning ? 5 : 2;
-            const distance = Math.floor(Math.random() * (isRunning ? 250 : 120)) + 60;
+            const distance = Math.floor(Math.random() * (isRunning ? 220 : 120)) + 60;
             let moved = 0;
 
-            if (isRunning) speak("⚡ 瘋狂衝刺中！", 1500);
+            if (isRunning) speak("⚡ 小黑貓快速踱步中！", 1500);
 
             const walkInterval = setInterval(() => {
                 if (isDragging || petState === 'eating' || moved >= distance) {
@@ -740,16 +820,15 @@
                     return;
                 }
 
-                // 計算新位置 (防止走出螢幕外)
                 petX += petDirection * speed;
                 if (petX < 20) {
                     petX = 20;
                     petDirection = 1;
-                    avatarEl.style.transform = 'scaleX(1)';
-                } else if (petX > window.innerWidth - 70) {
-                    petX = window.innerWidth - 70;
+                    catSvgContainer.style.transform = 'scaleX(1)';
+                } else if (petX > window.innerWidth - 80) {
+                    petX = window.innerWidth - 80;
                     petDirection = -1;
-                    avatarEl.style.transform = 'scaleX(-1)';
+                    catSvgContainer.style.transform = 'scaleX(-1)';
                 }
 
                 petEl.style.left = petX + 'px';
@@ -757,22 +836,21 @@
             }, 30);
         }
 
-        // 定時啟動隨機 AI
         setInterval(petAiLoop, Math.floor(Math.random() * 2500) + 3000);
 
-        // 🖱️ 滑鼠拖動（Drag & Drop）機制
+        // 🖱️ 滑鼠拖動（Drag & Drop）
         petEl.addEventListener('mousedown', (e) => {
             isDragging = true;
             petState = 'dragged';
             clearPetAnimations();
             petEl.classList.add('pet-dragged');
-            avatarEl.innerText = '🙀';
+            setCatExpression('surprised');
 
             dragOffsetX = e.clientX - petX;
             dragOffsetY = e.clientY - petY;
 
             playGothicNote(400, 'sawtooth', 0.2);
-            speak("抓到了！喵啊～", 1500);
+            speak("被抱起來了！大眼睛驚訝 😳", 1800);
         });
 
         window.addEventListener('mousemove', (e) => {
@@ -780,13 +858,12 @@
             petX = e.clientX - dragOffsetX;
             petY = e.clientY - dragOffsetY;
 
-            // 邊界限制
-            petX = Math.max(10, Math.min(window.innerWidth - 70, petX));
-            petY = Math.max(10, Math.min(window.innerHeight - 70, petY));
+            petX = Math.max(10, Math.min(window.innerWidth - 80, petX));
+            petY = Math.max(10, Math.min(window.innerHeight - 80, petY));
 
             petEl.style.left = petX + 'px';
             petEl.style.top = petY + 'px';
-            petEl.style.bottom = 'auto'; // 取消底端固定
+            petEl.style.bottom = 'auto';
         });
 
         window.addEventListener('mouseup', () => {
@@ -795,30 +872,31 @@
             petState = 'idle';
             clearPetAnimations();
             petEl.classList.add('pet-jump');
-            avatarEl.innerText = '🐈‍⬛';
+            setCatExpression('happy');
 
             playGothicNote(250, 'triangle', 0.4);
-            speak("安全著陸！🐾", 2000);
+            speak("輕盈著陸！🐾", 2000);
 
             setTimeout(() => {
                 petEl.classList.remove('pet-jump');
-            }, 500);
+                setCatExpression('normal');
+            }, 600);
         });
 
-        // 觸摸與餵食互動
+        // 撫摸與餵食
         function petInteract() {
             if (isDragging) return;
             playGothicNote(350, 'sine', 0.3);
             clearPetAnimations();
             petEl.classList.add('pet-spin');
-            avatarEl.innerText = '😻';
+            setCatExpression('happy');
 
-            const replies = ["🐈‍⬛ 喵嗚～ (開心轉圈)", "🖤 咕嚕咕嚕...", "♰ 好感度爆棚！"];
+            const replies = ["✨ 蹭蹭～ 大黃眼睛瞇成一條線", "🖤 咕嚕咕嚕... 最喜歡摸摸了", "♰ 親密度上升！"];
             speak(replies[Math.floor(Math.random() * replies.length)]);
 
             setTimeout(() => {
                 clearPetAnimations();
-                avatarEl.innerText = '🐈‍⬛';
+                setCatExpression('normal');
             }, 800);
         }
 
@@ -827,35 +905,39 @@
             playGothicNote(440, 'triangle', 0.4);
             petState = 'eating';
             foodEl.classList.remove('hidden');
-            speak("🐟 發現美味小魚！", 2500);
+            setCatExpression('happy');
+            speak("🐟 開心享用小魚乾！", 2500);
 
             setTimeout(() => {
                 clearPetAnimations();
                 petEl.classList.add('pet-jump');
-                avatarEl.innerText = '😸';
                 setTimeout(() => {
                     foodEl.classList.add('hidden');
                     clearPetAnimations();
-                    speak("😋 嚼嚼... 太美味了！", 2000);
+                    speak("😋 滿足地擦擦嘴巴～", 2000);
                     petState = 'idle';
-                    avatarEl.innerText = '🐈‍⬛';
+                    setCatExpression('normal');
                 }, 500);
             }, 800);
         }
 
-        // 🔮 歌德魔法特技
+        // 🎃 萬聖南瓜主題裝扮
         function petSpecialTrick() {
             if (isDragging) return;
             playGothicNote(587.33, 'sine', 0.8);
             clearPetAnimations();
             petEl.classList.add('pet-spin');
-            avatarEl.innerText = '🦇';
-            speak("🔮 哥德魔法！黑貓化身夜蝠", 2500);
+
+            pumpkinHatEl.classList.toggle('hidden');
+            const isHatOn = !pumpkinHatEl.classList.contains('hidden');
+
+            setCatExpression('happy');
+            speak(isHatOn ? "🎃 戴上萬聖節南瓜帽！可愛加倍" : "✨ 摘下南瓜帽～", 2500);
 
             setTimeout(() => {
-                avatarEl.innerText = '🐈‍⬛';
                 clearPetAnimations();
-            }, 1200);
+                setCatExpression('normal');
+            }, 800);
         }
 
         /* 網頁初始化 */
