@@ -101,9 +101,7 @@
             70% { transform: scale(0.95) rotate(-2deg); }
             100% { transform: scale(1) rotate(0deg); opacity: 1; }
         }
-        .jumpscare-anim {
-            animation: jumpscarePop 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
-        }
+        .jumpscare-anim { animation: jumpscarePop 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; }
         @keyframes eyeGlowFlicker {
             0%, 100% { filter: drop-shadow(0 0 15px #FFCC00); }
             50% { filter: drop-shadow(0 0 35px #FF0000); }
@@ -301,30 +299,41 @@
         </div>
     </section>
 
-    <!-- 🐾 放置在頁面上的動態食物放置點 (隱藏/顯示) -->
+    <!-- 🐾 放置在網頁上的貓抓板/貓爬架與毛線球 -->
+    <div id="catTree" class="hidden fixed bottom-12 right-24 z-30 text-5xl transition pointer-events-none drop-shadow-2xl">
+        🏰
+    </div>
+
+    <!-- 🐾 食物/毛線球動態放置點 -->
     <div id="droppedFood" class="hidden fixed z-40 text-3xl animate-bounce pointer-events-none drop-shadow-lg">
         <span id="droppedFoodIcon">🐟</span>
     </div>
 
     <!-- 🐾 哥德黑貓小寵物 UI 控制面板 -->
     <div id="petUi" class="fixed bottom-4 right-4 z-50 flex flex-col items-center select-none">
-        <div class="flex gap-2 mb-2 bg-darkcard/90 p-1.5 rounded-full border border-gothicpurple/50 backdrop-blur shadow-2xl">
+        <div class="flex flex-wrap gap-2 mb-2 bg-darkcard/90 p-1.5 rounded-full border border-gothicpurple/50 backdrop-blur shadow-2xl">
             <button onclick="toggleFoodMenu(event)" class="px-2.5 py-1 bg-gothicpurple/60 hover:bg-gothicpurple text-xs text-white rounded-full transition flex items-center gap-1 cursor-pointer">
-                🍽️ 放置食物
+                🍽️ 餵食
+            </button>
+            <button onclick="placeYarnBall(event)" class="px-2.5 py-1 bg-gothicpurple/60 hover:bg-gothicpurple text-xs text-white rounded-full transition flex items-center gap-1 cursor-pointer">
+                🧶 毛線球
+            </button>
+            <button onclick="toggleCatTree(event)" class="px-2.5 py-1 bg-gothicpurple/60 hover:bg-gothicpurple text-xs text-white rounded-full transition flex items-center gap-1 cursor-pointer">
+                🏰 貓爬架
             </button>
             <button onclick="openClosetModal(event)" class="px-2.5 py-1 bg-charcoal border border-moonlight/30 hover:border-moonlight text-xs text-moonlight rounded-full transition flex items-center gap-1 cursor-pointer">
-                👗 換裝衣帽間
+                👗 換裝總覽
             </button>
             <button onclick="triggerJumpscare(event)" class="px-2.5 py-1 bg-bloodred hover:bg-red-700 text-xs text-white rounded-full transition flex items-center gap-1 cursor-pointer font-bold">
                 👻 突襲
             </button>
         </div>
 
-        <!-- 🍱 多樣化食物挑選菜單 (浮點) -->
+        <!-- 🍱 多樣化食物挑選菜單 -->
         <div id="foodMenu" class="hidden mb-2 p-2 bg-darkcard border border-gothicpurple/80 rounded-xl shadow-2xl flex gap-3 text-2xl backdrop-blur">
             <button onclick="selectFoodToPlace('🐟', 'like')" title="小魚乾 (喜歡)" class="hover:scale-125 transition">🐟</button>
-            <button onclick="selectFoodToPlace('🥫', 'like')" title="美味罐頭 (喜歡)" class="hover:scale-125 transition">🥫</button>
-            <button onclick="selectFoodToPlace('🥀', 'gothic')" title="哥德黑玫瑰 (最愛)" class="hover:scale-125 transition">🥀</button>
+            <button onclick="selectFoodToPlace('🥫', 'like')" title="罐頭 (喜歡)" class="hover:scale-125 transition">🥫</button>
+            <button onclick="selectFoodToPlace('🥀', 'gothic')" title="黑玫瑰 (最愛)" class="hover:scale-125 transition">🥀</button>
             <button onclick="selectFoodToPlace('🥒', 'dislike')" title="苦瓜 (噁心)" class="hover:scale-125 transition">🥒</button>
             <button onclick="selectFoodToPlace('🍋', 'dislike')" title="酸檸檬 (嫌棄)" class="hover:scale-125 transition">🍋</button>
         </div>
@@ -338,7 +347,7 @@
             <div class="absolute -bottom-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-darkcard border-r border-b border-gothicpurple rotate-45"></div>
         </div>
 
-        <!-- 👗 裝扮元素圖層 (動態顯示) -->
+        <!-- 👗 裝扮元素圖層 -->
         <div id="outfitHat" class="hidden absolute -top-5 left-2.5 text-2xl z-20 pointer-events-none"></div>
         <div id="outfitTop" class="hidden absolute top-7 left-3 text-xl z-20 pointer-events-none"></div>
         <div id="outfitBottom" class="hidden absolute top-11 left-3.5 text-lg z-20 pointer-events-none"></div>
@@ -347,12 +356,12 @@
             <svg id="catSvg" viewBox="0 0 100 100" class="w-full h-full drop-shadow-md">
                 <!-- 尾巴 -->
                 <path class="cat-tail" d="M 30,75 C 10,80 5,50 15,40 C 20,35 22,45 18,55 C 12,65 25,70 32,68 Z" fill="#18181A" />
-                <!-- 貓咪身體 -->
+                <!-- 身體 -->
                 <ellipse cx="50" cy="68" rx="22" ry="20" fill="#18181A" />
                 <!-- 前腳 -->
                 <ellipse cx="40" cy="84" rx="6" ry="10" fill="#18181A" />
                 <ellipse cx="60" cy="84" rx="6" ry="10" fill="#18181A" />
-                <!-- 貓咪頭部 -->
+                <!-- 頭部 -->
                 <ellipse cx="50" cy="45" rx="26" ry="22" fill="#18181A" />
                 <!-- 耳朵 -->
                 <polygon points="28,32 38,10 48,28" fill="#18181A" />
@@ -370,13 +379,13 @@
                     <circle cx="59" cy="38" r="2.5" fill="#FFFFFF" />
                 </g>
 
-                <!-- 眼睛: 瞇眼/開心表情 -->
+                <!-- 眼睛: 瞇眼/開心 -->
                 <g id="catEyesHappy" class="hidden">
                     <path d="M 29,42 Q 38,32 47,42" stroke="#FFCC00" stroke-width="3.5" fill="none" stroke-linecap="round"/>
                     <path d="M 53,42 Q 62,32 71,42" stroke="#FFCC00" stroke-width="3.5" fill="none" stroke-linecap="round"/>
                 </g>
 
-                <!-- 眼睛: 被抓起/驚訝大眼 -->
+                <!-- 眼睛: 驚訝 -->
                 <g id="catEyesSurprised" class="hidden">
                     <circle cx="38" cy="42" r="11" fill="#FFCC00" />
                     <circle cx="62" cy="42" r="11" fill="#FFCC00" />
@@ -386,7 +395,7 @@
                     <circle cx="58" cy="37" r="2" fill="#FFF" />
                 </g>
 
-                <!-- 眼睛: 嫌棄/噁心瞇眼 (噁心表情) -->
+                <!-- 眼睛: 噁心/嫌棄 -->
                 <g id="catEyesDisgusted" class="hidden">
                     <path d="M 28,38 L 46,46 M 28,46 L 46,38" stroke="#FFCC00" stroke-width="3" fill="none" stroke-linecap="round"/>
                     <path d="M 54,38 L 72,46 M 54,46 L 72,38" stroke="#FFCC00" stroke-width="3" fill="none" stroke-linecap="round"/>
@@ -401,56 +410,80 @@
         </div>
     </div>
 
-    <!-- 👗 貓咪換裝衣帽間彈窗 (Closet Modal) -->
-    <div id="closetModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/85 backdrop-blur-md hidden p-4">
-        <div class="bg-darkcard border border-gothicpurple rounded-xl max-w-lg w-full p-6 space-y-6 gothic-glow relative">
+    <!-- 👗 貓咪換裝造型總覽衣帽間彈窗 -->
+    <div id="closetModal" class="fixed inset-0 z-50 flex items-center justify-center bg-black/85 backdrop-blur-md hidden p-4 overflow-y-auto">
+        <div class="bg-darkcard border border-gothicpurple rounded-xl max-w-2xl w-full p-6 space-y-6 gothic-glow relative my-8">
             <button onclick="closeClosetModal()" class="absolute top-4 right-4 text-gray-400 hover:text-white text-xl z-10">✕</button>
             <div class="border-b border-gothicpurple/40 pb-3">
                 <h3 class="text-2xl font-bold font-cinzel text-moonlight flex items-center gap-2">
-                    <span>👗</span> 維多利亞貓咪衣帽間
+                    <span>👗</span> 服裝造型總覽衣帽間
                 </h3>
-                <p class="text-xs text-fogblue">為黑貓挑選頭飾、上衣與服裝組合</p>
+                <p class="text-xs text-fogblue">依據《服裝造型總覽》圖鑑分類打造的多元穿搭</p>
             </div>
 
-            <!-- 服裝類別選擇 -->
-            <div class="space-y-4">
+            <div class="space-y-5 max-h-[60vh] overflow-y-auto pr-2">
+                <!-- 1. 日常休閒系列 -->
                 <div>
-                    <h4 class="text-xs font-bold text-gothicpurple mb-2">👒 頭飾 (Headwear)</h4>
-                    <div class="grid grid-cols-4 gap-2 text-sm">
-                        <button onclick="equipItem('hat', '🎃')" class="p-2 bg-charcoal border border-gothicpurple/40 hover:border-moonlight rounded text-center">🎃 南瓜帽</button>
-                        <button onclick="equipItem('hat', '🕸️')" class="p-2 bg-charcoal border border-gothicpurple/40 hover:border-moonlight rounded text-center">🕸️ 面紗</button>
-                        <button onclick="equipItem('hat', '👑')" class="p-2 bg-charcoal border border-gothicpurple/40 hover:border-moonlight rounded text-center">👑 金皇冠</button>
-                        <button onclick="equipItem('hat', '👒')" class="p-2 bg-charcoal border border-gothicpurple/40 hover:border-moonlight rounded text-center">👒 草帽</button>
+                    <h4 class="text-xs font-bold text-gothicpurple mb-2">👕 日常休閒系列 (Casual)</h4>
+                    <div class="grid grid-cols-4 gap-2 text-xs">
+                        <button onclick="equipOutfitItem('T恤牛仔褲', '👕', '🩳')" class="p-2 bg-charcoal border border-gothicpurple/40 hover:border-moonlight rounded text-center">👕 T恤牛仔褲</button>
+                        <button onclick="equipOutfitItem('帽T', '🧥', '')" class="p-2 bg-charcoal border border-gothicpurple/40 hover:border-moonlight rounded text-center">🧥 帽T</button>
+                        <button onclick="equipOutfitItem('針織毛衣', '🧶', '')" class="p-2 bg-charcoal border border-gothicpurple/40 hover:border-moonlight rounded text-center">🧶 針織毛衣</button>
+                        <button onclick="equipOutfitItem('圍巾裝', '🧣', '')" class="p-2 bg-charcoal border border-gothicpurple/40 hover:border-moonlight rounded text-center">🧣 溫暖圍巾</button>
+                        <button onclick="equipOutfitItem('背帶褲', '👔', '👖')" class="p-2 bg-charcoal border border-gothicpurple/40 hover:border-moonlight rounded text-center">👖 背帶褲</button>
+                        <button onclick="equipOutfitItem('背包客', '🎒', '')" class="p-2 bg-charcoal border border-gothicpurple/40 hover:border-moonlight rounded text-center">🎒 休閒背包</button>
                     </div>
                 </div>
 
+                <!-- 2. 可愛俏皮系列 -->
                 <div>
-                    <h4 class="text-xs font-bold text-gothicpurple mb-2">🧥 上衣/胸飾 (Tops)</h4>
-                    <div class="grid grid-cols-3 gap-2 text-sm">
-                        <button onclick="equipItem('top', '🧥')" class="p-2 bg-charcoal border border-gothicpurple/40 hover:border-moonlight rounded text-center">🧥 紫斗篷</button>
-                        <button onclick="equipItem('top', '🎀')" class="p-2 bg-charcoal border border-gothicpurple/40 hover:border-moonlight rounded text-center">🎀 蝶領結</button>
-                        <button onclick="equipItem('top', '🤍')" class="p-2 bg-charcoal border border-gothicpurple/40 hover:border-moonlight rounded text-center">🤍 蕾絲領</button>
+                    <h4 class="text-xs font-bold text-gothicpurple mb-2">🐰 可愛俏皮系列 (Cute)</h4>
+                    <div class="grid grid-cols-4 gap-2 text-xs">
+                        <button onclick="equipOutfitItem('兔耳帽', '🐰', '')" class="p-2 bg-charcoal border border-gothicpurple/40 hover:border-moonlight rounded text-center">🐰 兔耳帽</button>
+                        <button onclick="equipOutfitItem('熊熊帽', '🐻', '')" class="p-2 bg-charcoal border border-gothicpurple/40 hover:border-moonlight rounded text-center">🐻 熊熊帽</button>
+                        <button onclick="equipOutfitItem('小黃鴨雨衣', '🐥', '🧥')" class="p-2 bg-charcoal border border-gothicpurple/40 hover:border-moonlight rounded text-center">🐥 小黃鴨雨衣</button>
+                        <button onclick="equipOutfitItem('恐龍裝', '🦖', '')" class="p-2 bg-charcoal border border-gothicpurple/40 hover:border-moonlight rounded text-center">🦖 恐龍裝</button>
+                        <button onclick="equipOutfitItem('大蝴蝶結', '🎀', '')" class="p-2 bg-charcoal border border-gothicpurple/40 hover:border-moonlight rounded text-center">🎀 俏皮蝴蝶結</button>
+                        <button onclick="equipOutfitItem('小翅膀', '🪽', '')" class="p-2 bg-charcoal border border-gothicpurple/40 hover:border-moonlight rounded text-center">🪽 小翅膀</button>
                     </div>
                 </div>
 
+                <!-- 3. 季節限定系列 -->
                 <div>
-                    <h4 class="text-xs font-bold text-gothicpurple mb-2">🩳 下著/裙子 (Bottoms)</h4>
-                    <div class="grid grid-cols-2 gap-2 text-sm">
-                        <button onclick="equipItem('bottom', '🩳')" class="p-2 bg-charcoal border border-gothicpurple/40 hover:border-moonlight rounded text-center">🩳 金邊短褲</button>
-                        <button onclick="equipItem('bottom', '👗')" class="p-2 bg-charcoal border border-gothicpurple/40 hover:border-moonlight rounded text-center">👗 歌德百褶裙</button>
+                    <h4 class="text-xs font-bold text-gothicpurple mb-2">🌸 季節限定系列 (Seasonal)</h4>
+                    <div class="grid grid-cols-4 gap-2 text-xs">
+                        <button onclick="equipOutfitItem('春季花朵', '🌸', '')" class="p-2 bg-charcoal border border-gothicpurple/40 hover:border-moonlight rounded text-center">🌸 春季花朵</button>
+                        <button onclick="equipOutfitItem('夏日沙灘帽', '👒', '')" class="p-2 bg-charcoal border border-gothicpurple/40 hover:border-moonlight rounded text-center">👒 夏日草帽</button>
+                        <button onclick="equipOutfitItem('聖誕裝', '🎅', '🧥')" class="p-2 bg-charcoal border border-gothicpurple/40 hover:border-moonlight rounded text-center">🎅 聖誕裝</button>
+                        <button onclick="equipOutfitItem('萬聖南瓜', '🎃', '')" class="p-2 bg-charcoal border border-gothicpurple/40 hover:border-moonlight rounded text-center">🎃 萬聖南瓜</button>
                     </div>
                 </div>
 
+                <!-- 4. 職業角色系列 -->
                 <div>
-                    <h4 class="text-xs font-bold text-gothicpurple mb-2">✨ 特殊全套套裝 (Outfits)</h4>
-                    <div class="grid grid-cols-2 gap-2 text-sm">
-                        <button onclick="equipOutfit('ghost')" class="p-2 bg-charcoal border border-gothicpurple/40 hover:border-moonlight rounded text-center">👻 怨靈幽靈裝</button>
-                        <button onclick="equipOutfit('pirate')" class="p-2 bg-charcoal border border-gothicpurple/40 hover:border-moonlight rounded text-center">🏴‍☠️ 黑貓船長服</button>
+                    <h4 class="text-xs font-bold text-gothicpurple mb-2">🩺 職業角色系列 (Careers)</h4>
+                    <div class="grid grid-cols-4 gap-2 text-xs">
+                        <button onclick="equipOutfitItem('醫生', '🩺', '🥼')" class="p-2 bg-charcoal border border-gothicpurple/40 hover:border-moonlight rounded text-center">🩺 白袍醫生</button>
+                        <button onclick="equipOutfitItem('警察', '👮', '')" class="p-2 bg-charcoal border border-gothicpurple/40 hover:border-moonlight rounded text-center">👮 威嚴警察</button>
+                        <button onclick="equipOutfitItem('廚師', '🧑‍🍳', '🍳')" class="p-2 bg-charcoal border border-gothicpurple/40 hover:border-moonlight rounded text-center">🧑‍🍳 五星廚師</button>
+                        <button onclick="equipOutfitItem('宇航員', '👨‍🚀', '🚀')" class="p-2 bg-charcoal border border-gothicpurple/40 hover:border-moonlight rounded text-center">👨‍🚀 太空宇航員</button>
+                    </div>
+                </div>
+
+                <!-- 5. 主題特別造型 -->
+                <div>
+                    <h4 class="text-xs font-bold text-gothicpurple mb-2">🧙‍♀️ 主題特別造型 (Theme)</h4>
+                    <div class="grid grid-cols-4 gap-2 text-xs">
+                        <button onclick="equipOutfitItem('魔法師', '🧙‍♀️', '🔮')" class="p-2 bg-charcoal border border-gothicpurple/40 hover:border-moonlight rounded text-center">🧙‍♀️ 魔法師</button>
+                        <button onclick="equipOutfitItem('忍者', '🥷', '⚔️')" class="p-2 bg-charcoal border border-gothicpurple/40 hover:border-moonlight rounded text-center">🥷 疾風忍者</button>
+                        <button onclick="equipOutfitItem('貓咪公主', '👑', '👗')" class="p-2 bg-charcoal border border-gothicpurple/40 hover:border-moonlight rounded text-center">👑 貓咪公主</button>
+                        <button onclick="equipOutfitItem('海盜船長', '🏴‍☠️', '⚔️')" class="p-2 bg-charcoal border border-gothicpurple/40 hover:border-moonlight rounded text-center">🏴‍☠️ 海盜船長</button>
+                        <button onclick="equipOutfitItem('恐怖裝扮', '👻', '')" class="p-2 bg-charcoal border border-gothicpurple/40 hover:border-moonlight rounded text-center">👻 恐怖幽靈</button>
                     </div>
                 </div>
             </div>
 
-            <div class="pt-2 flex justify-between items-center border-t border-gothicpurple/30">
+            <div class="pt-3 flex justify-between items-center border-t border-gothicpurple/30">
                 <button onclick="unequipAll()" class="px-4 py-2 bg-red-900/60 hover:bg-red-800 text-white text-xs rounded transition">
                     🗑️ 脫下所有服裝
                 </button>
@@ -800,7 +833,7 @@
             }
         }
 
-        /* 🐾 貓咪系統：AI 漫遊、自由放置食物、食物反應、換裝系統 */
+        /* 🐾 貓咪系統：AI 漫遊、貓抓板/貓爬架、毛線球玩具、低機率開啟作品卡片 */
         let petX = 100;
         let petY = window.innerHeight - 90;
         let petDirection = 1;
@@ -808,8 +841,8 @@
         let isDragging = false;
         let dragOffsetX = 0, dragOffsetY = 0;
 
-        let selectedFood = null; // 當前選取的食物類型 { icon, type }
-        let droppedFoodPos = null; // 放置在畫面上的食物位置 { x, y, icon, type }
+        let selectedFood = null;
+        let droppedFoodPos = null;
 
         const petEl = document.getElementById('pet');
         const catSvgContainer = document.getElementById('catSvgContainer');
@@ -819,6 +852,7 @@
         const foodMenuEl = document.getElementById('foodMenu');
         const droppedFoodEl = document.getElementById('droppedFood');
         const droppedFoodIconEl = document.getElementById('droppedFoodIcon');
+        const catTreeEl = document.getElementById('catTree');
 
         const eyesNormal = document.getElementById('catEyesNormal');
         const eyesHappy = document.getElementById('catEyesHappy');
@@ -847,6 +881,56 @@
             petEl.classList.remove('pet-walking', 'pet-running', 'pet-jump', 'pet-stretch', 'pet-spin', 'pet-dragged');
         }
 
+        /* 🏰 貓抓板 / 貓爬架系統 */
+        function toggleCatTree(e) {
+            e.stopPropagation();
+            catTreeEl.classList.toggle('hidden');
+            const isOpen = !catTreeEl.classList.contains('hidden');
+            if (isOpen) {
+                speak("🏰 貓抓板/貓爬架準備就緒！黑貓躍躍欲試...", 2500);
+                setTimeout(() => catJumpOnTree(), 800);
+            } else {
+                speak("貓爬架已收起～", 2000);
+            }
+        }
+
+        function catJumpOnTree() {
+            if (catTreeEl.classList.contains('hidden') || isDragging) return;
+            petState = 'interacting';
+            clearPetAnimations();
+            petEl.classList.add('pet-jump');
+            setCatExpression('happy');
+
+            // 貓咪跳到貓抓板上
+            petX = window.innerWidth - 130;
+            petY = window.innerHeight - 150;
+            petEl.style.left = petX + 'px';
+            petEl.style.top = petY + 'px';
+            petEl.style.bottom = 'auto';
+
+            playGothicNote(523.25, 'triangle', 0.5);
+            speak("🏰 登頂貓爬架！俯瞰整座網頁古宅 😼", 3000);
+
+            setTimeout(() => {
+                clearPetAnimations();
+                petState = 'idle';
+                setCatExpression('normal');
+            }, 1200);
+        }
+
+        /* 🧶 放置毛線球系統 */
+        function placeYarnBall(e) {
+            e.stopPropagation();
+            droppedFoodPos = { x: Math.random() * (window.innerWidth - 150) + 50, y: window.innerHeight - 100, icon: '🧶', type: 'toy' };
+            droppedFoodIconEl.innerText = '🧶';
+            droppedFoodEl.style.left = droppedFoodPos.x + 'px';
+            droppedFoodEl.style.top = droppedFoodPos.y + 'px';
+            droppedFoodEl.classList.remove('hidden');
+
+            speak("🧶 出現了滾滾毛線球！黑貓飛奔過去玩耍...", 2500);
+            catGoEatFood();
+        }
+
         /* 🍱 選擇與放置食物系統 */
         function toggleFoodMenu(e) {
             e.stopPropagation();
@@ -861,7 +945,6 @@
 
         function handleWorldClick(e) {
             if (!selectedFood) return;
-            // 避開 UI 點擊
             if (e.target.closest('#petUi') || e.target.closest('#closetModal') || e.target.closest('#modal')) return;
 
             droppedFoodPos = { x: e.clientX - 20, y: e.clientY - 20, ...selectedFood };
@@ -872,12 +955,9 @@
 
             speak(`出現了 ${selectedFood.icon} ！黑貓發現了...`, 2000);
             selectedFood = null;
-
-            // 觸發貓咪尋路前往吃食物
             catGoEatFood();
         }
 
-        // 貓咪奔跑去放置地點吃食物
         function catGoEatFood() {
             if (!droppedFoodPos || isDragging) return;
             petState = 'interacting';
@@ -895,7 +975,7 @@
                 const dy = targetY - petY;
                 const dist = Math.sqrt(dx * dx + dy * dy);
 
-                if (dist < 20 || isDragging) {
+                if (dist < 25 || isDragging) {
                     clearInterval(moveInterval);
                     clearPetAnimations();
                     if (!isDragging) eatFoodReaction();
@@ -909,7 +989,6 @@
             }, 30);
         }
 
-        // 貓咪吃到不同食物的喜好與噁心反應
         function eatFoodReaction() {
             petState = 'eating';
             droppedFoodEl.classList.add('hidden');
@@ -920,7 +999,11 @@
             const foodIcon = droppedFoodPos.icon;
             droppedFoodPos = null;
 
-            if (foodType === 'like') {
+            if (foodType === 'toy') { // 玩毛線球反應
+                playGothicNote(659.25, 'sine', 0.6);
+                setCatExpression('happy');
+                speak("🧶 滾啊滾～ 撥動毛線球超好玩！🐾", 3000);
+            } else if (foodType === 'like') {
                 playGothicNote(440, 'triangle', 0.5);
                 setCatExpression('happy');
                 speak(`😋 嚼嚼... 最喜歡 ${foodIcon} 了！眼睛幸福成一條線~`, 3000);
@@ -941,7 +1024,7 @@
             }, 1200);
         }
 
-        /* 👗 衣帽間換裝系統 */
+        /* 👗 衣帽間全新換裝系統 (根據《服裝造型總覽》圖鑑分類) */
         const outfitHat = document.getElementById('outfitHat');
         const outfitTop = document.getElementById('outfitTop');
         const outfitBottom = document.getElementById('outfitBottom');
@@ -955,31 +1038,20 @@
             document.getElementById('closetModal').classList.add('hidden');
         }
 
-        function equipItem(slot, icon) {
-            playGothicNote(350, 'sine', 0.2);
-            if (slot === 'hat') {
-                outfitHat.innerText = icon; outfitHat.classList.remove('hidden');
-            } else if (slot === 'top') {
-                outfitTop.innerText = icon; outfitTop.classList.remove('hidden');
-            } else if (slot === 'bottom') {
-                outfitBottom.innerText = icon; outfitBottom.classList.remove('hidden');
-            }
-            speak("✨ 換裝完成！新造型好看嗎？", 2000);
-        }
+        function equipOutfitItem(name, hatIcon, topIcon = '') {
+            playGothicNote(440, 'sine', 0.3);
+            outfitHat.innerText = hatIcon;
+            outfitHat.classList.remove('hidden');
 
-        function equipOutfit(style) {
-            playGothicNote(440, 'sine', 0.4);
-            if (style === 'ghost') {
-                outfitHat.innerText = '👻'; outfitHat.classList.remove('hidden');
-                outfitTop.innerText = '🤍'; outfitTop.classList.remove('hidden');
-                outfitBottom.innerText = ''; outfitBottom.classList.add('hidden');
-                speak("👻 變身為怨靈幽靈黑貓！", 2500);
-            } else if (style === 'pirate') {
-                outfitHat.innerText = '🏴‍☠️'; outfitHat.classList.remove('hidden');
-                outfitTop.innerText = '🧥'; outfitTop.classList.remove('hidden');
-                outfitBottom.innerText = '🩳'; outfitBottom.classList.remove('hidden');
-                speak("🏴‍☠️ 啟航！維多利亞黑貓船長！", 2500);
+            if (topIcon) {
+                outfitTop.innerText = topIcon;
+                outfitTop.classList.remove('hidden');
+            } else {
+                outfitTop.classList.add('hidden');
             }
+            outfitBottom.classList.add('hidden');
+
+            speak(`✨ 穿上了《${name}》造型！`, 2500);
         }
 
         function unequipAll() {
@@ -990,7 +1062,7 @@
             speak("脫下所有服裝，恢復經典黑貓模樣～", 2000);
         }
 
-        // 🙀 驚喜突襲全螢幕 (自動機率大幅降至 1%)
+        // 🙀 全螢幕突襲驚喜
         function triggerJumpscare(e) {
             if (e) e.stopPropagation();
             playGothicNote(100, 'sawtooth', 1.5);
@@ -1003,18 +1075,18 @@
             speak("喵嘻嘻～ 有沒有被嚇一跳？ 🎃", 2500);
         }
 
-        // 🐾 AI 漫遊
+        // 🐾 AI 漫遊核心 (打開作品卡片機率已大幅調低至僅 3%)
         function petAiLoop() {
             if (isDragging || petState === 'eating' || petState === 'dragged' || petState === 'interacting') return;
 
             const rand = Math.random();
 
-            if (rand < 0.01) { // 僅 1% 極低機率自動發動突襲驚喜！
+            if (rand < 0.01) { // 1% 突襲
                 triggerJumpscare();
-            } else if (rand < 0.15) { // 偷玩小遊戲
-                tryPlayGameCard();
-            } else if (rand < 0.30) { // 偷看作品
+            } else if (rand < 0.03) { // 🔻 僅 3% 極低機率打開作品卡片
                 tryClickWorkCard();
+            } else if (rand < 0.15) { // 偷玩卡牌遊戲
+                tryPlayGameCard();
             } else if (rand < 0.60) { // 普通散步
                 startWalking(false);
             } else if (rand < 0.75) { // 伸懶腰
@@ -1060,7 +1132,7 @@
             if (workCards.length === 0) { startWalking(false); return; }
 
             petState = 'interacting';
-            speak("這張作品很讚！幫你打開看看 🐾", 2500);
+            speak("這張作品很讚！偶爾幫你開啟看看 🐾", 2500);
             const randomWork = workCards[Math.floor(Math.random() * workCards.length)];
 
             clearPetAnimations();
@@ -1148,23 +1220,6 @@
                 setCatExpression('normal');
             }, 600);
         });
-
-        /* 撫摸 */
-        function petInteract() {
-            if (isDragging) return;
-            playGothicNote(350, 'sine', 0.3);
-            clearPetAnimations();
-            petEl.classList.add('pet-spin');
-            setCatExpression('happy');
-
-            const replies = ["✨ 蹭蹭～ 大黃眼睛瞇成一條線", "🖤 咕嚕咕嚕... 最喜歡摸摸了", "♰ 親密度上升！"];
-            speak(replies[Math.floor(Math.random() * replies.length)]);
-
-            setTimeout(() => {
-                clearPetAnimations();
-                setCatExpression('normal');
-            }, 800);
-        }
 
         /* 網頁初始化 */
         renderPortfolio();
